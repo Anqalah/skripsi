@@ -5,6 +5,7 @@ import AuthLayout from "../components/Layouts/AuthLayouts";
 import FormInput from "../components/Elements/Input";
 import { FcGoogle } from "react-icons/fc";
 import Form from "../components/Fragments/Form";
+import { Link } from "react-router-dom";
 
 // const LoginPage = () => {
 //   return (
@@ -28,15 +29,15 @@ const LoginPage = () => {
       subtitle="Enter your personal details to use all of site features"
       linkText="Register"
       linkHref="/register"
-      >
-      
-      <a
+    >
+      <Link
+        to
         href="#"
         className="flex items-center justify-center px-4 py-2 mb-4 bg-white text-black rounded-full border border-gray-300 hover:bg-gray-100 transition"
       >
         <FcGoogle className="mr-2" />
         Login with Google
-      </a>
+      </Link>
       <Form onSubmit={handleSubmit}>
         <FormInput
           label="Email"
@@ -51,12 +52,12 @@ const LoginPage = () => {
           placeholder="Enter your password"
         />
       </Form>
-      <a
-        href="/forgot-password"
+      <Link
+        to="/forgot-password"
         className="text-sm text-purple-800 hover:underline"
       >
         Forgot password?
-      </a>
+      </Link>
     </AuthLayout>
   );
 };
