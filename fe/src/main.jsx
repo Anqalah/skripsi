@@ -5,8 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./Pages/login";
 import RegisterPage from "./Pages/register";
 import ErrorPage from "./Pages/error";
-import ForgotPassword from "./Pages/forgot";
 import { Link } from "react-router-dom";
+import ProductsPages from "./Pages/products";
 
 const router = createBrowserRouter([
   {
@@ -27,8 +27,8 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
+    path: "/products",
+    element: <ProductsPages />,
   },
 ]);
 
