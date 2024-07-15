@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import session from "express-session";
-// import db from "./config/Database.js";
+import db from "./config/Database.js";
 import dotenv from "dotenv";
 import userRoute from "./routes/UserRoute.js";
 import productRoute from "./routes/ProductRoute.js";

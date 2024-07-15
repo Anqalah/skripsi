@@ -1,4 +1,4 @@
-import Products from "../models/ProductModel";
+import Products from "../models/ProductModel.js";
 export const getProducts = async (req, res) => {};
 export const getProductById = async (req, res) => {};
 export const createProduct = async (req, res) => {};
