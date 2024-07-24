@@ -35,8 +35,6 @@ export const Me = async (req, res) => {
 export const Logout = async (req, res) => {
   req.session.destroy((err) => {
     if (err) return res.status(400).json({ msg: "Tidak Dapat Logout" });
-    res.status(200).json({ msg: "Logout Berhasil" });
   });
-
   res.status(200).json({ msg: "Logout Berhasil" });
 };
