@@ -1,5 +1,5 @@
-import InputForm from "../Elements/Input";
 import Button from "../Elements/Button";
+import { InputForm } from "../Elements/Input";
 
 const FormRegister = () => {
   return (
@@ -28,7 +28,9 @@ const FormRegister = () => {
         placeholder="******"
         name="confirmPassword"
       />
-      <Button classname="bg-[#03A9F4] w-full">Register</Button>
+      <Button classname="bg-[#03A9F4] w-full" type="submit">
+        Register
+      </Button>
     </form>
   );
 };
