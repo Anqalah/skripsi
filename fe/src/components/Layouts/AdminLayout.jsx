@@ -1,6 +1,20 @@
 import React from "react";
+import Button from "../Elements/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { LogOut, reset } from "../../Features/authSlice";
 
 const AdminLayout = ({ children }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+
+  const logout = () => {
+    dispatch(LogOut());
+    dispatch(reset());
+    navigate("/login");
+  };
+
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -29,7 +43,7 @@ const AdminLayout = ({ children }) => {
           <ul className="space-y-5 font-medium">
             <li>
               <a
-                href="/admin"
+                href="/dashboard/admin/"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -100,6 +114,12 @@ const AdminLayout = ({ children }) => {
               </a>
             </li>
           </ul>
+          <Button
+            classname="flex w-full justify-center items-center p-2 mt-5 bg-[#03A9F4] text-white rounded-lg dark:text-black hover:bg-red-500 dark:hover:bg-gray-700 group"
+            onClick={logout}
+          >
+            Logout
+          </Button>
         </div>
       </aside>
 

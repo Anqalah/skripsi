@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_BASE_URL } from "../config/config";
+import { API_BASE_URL } from "../config/config.js";
 
 const initialState = {
   user: null,
@@ -10,51 +10,17 @@ const initialState = {
   message: "",
 };
 
-export const LoginUser = createAsyncThunk(
-  "auth/LoginUser",
-  async (user, thunkAPI) => {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/login`, {
-        email: user.email,
-        password: user.password,
-      });
-      return response.data;
-    } catch (error) {
-      if (error.response) {
-        const message = error.response.data.message || "An error occured";
-        console.log("Login Failed", message);
-        console.log(API_BASE_URL);
-        return thunkAPI.rejectWithValue(message);
-      } else {
-        // Menangani kesalahan lain yang mungkin terjadi (misalnya kesalahan jaringan)
-        console.error("An unexpected error occurred:", error.message);
-        return thunkAPI.rejectWithValue("An unexpected error occurred");
-      }
-    }
+export const login = createAsyncThunk("user/Login", async (user, thunkAPI) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/login`, user);
+    return response.data;
+  } catch (error) {
+    const message = error.response.data.message;
+    return thunkAPI.rejectWithValue(message);
   }
-);
+});
 
-export const RegisterUser = createAsyncThunk(
-  "auth/RegisterUser",
-  async (req, thunkAPI) => {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/register`, {
-        name: req.name,
-        email: req.email,
-        password: req.password,
-        confPassword: req.confPassword,
-      });
-      return response.data;
-    } catch (error) {
-      if (error.response) {
-        const message = error.response.data.message;
-        return thunkAPI.rejectWithValue(message);
-      }
-    }
-  }
-);
-
-export const MeUser = createAsyncThunk("auth/MeUser", async (thunkAPI) => {
+export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/me`);
     return response.data;
@@ -66,7 +32,7 @@ export const MeUser = createAsyncThunk("auth/MeUser", async (thunkAPI) => {
   }
 });
 
-export const LogoutUser = createAsyncThunk("auth/LogoutUser", async () => {
+export const LogOut = createAsyncThunk("user/logout", async () => {
   await axios.delete(`${API_BASE_URL}/logout`);
 });
 
@@ -76,39 +42,38 @@ export const authSlice = createSlice({
   reducers: {
     reset: (state) => initialState,
   },
-
   extraReducers: (builder) => {
-    //-------------------------LOGIN---------------------------------//
-    builder.addCase(LoginUser.pending, (state) => {
+    builder.addCase(login.pending, (state) => {
       state.isLoading = true;
+      state.message = "";
     });
-    builder.addCase(LoginUser.fulfilled, (state, action) => {
+    builder.addCase(login.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.user = action.payload;
     });
-    builder.addCase(LoginUser.rejected, (state, action) => {
+    builder.addCase(login.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
     });
 
-    //----------------------REGISTER------------------------------//
-    builder.addCase(RegisterUser.pending, (state) => {
+    //Get User Login
+    builder.addCase(getMe.pending, (state) => {
       state.isLoading = true;
+      state.message = "";
     });
-    builder.addCase(RegisterUser.fulfilled, (state, action) => {
+    builder.addCase(getMe.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
       state.user = action.payload;
     });
-    builder.addCase(RegisterUser.rejected, (state, action) => {
+    builder.addCase(getMe.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
     });
   },
 });
-
 export const { reset } = authSlice.actions;
 export default authSlice.reducer;

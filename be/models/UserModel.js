@@ -20,6 +20,27 @@ const Users = db.define(
         notEmpty: true,
       },
     },
+    jk: {
+      type: DataTypes.STRING,
+    },
+    umur: {
+      type: DataTypes.STRING,
+    },
+    alamat: {
+      type: DataTypes.STRING,
+    },
+    hp: {
+      type: DataTypes.STRING,
+    },
+    bidang: {
+      type: DataTypes.STRING,
+    },
+    kelas: {
+      type: DataTypes.STRING,
+    },
+    absen: {
+      type: DataTypes.STRING,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,

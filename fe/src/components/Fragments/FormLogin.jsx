@@ -1,68 +1,71 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Fragment, React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginUser, reset } from "../../Features/authSlice";
-import { InputForm } from "../Elements/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../Features/authSlice";
 import Button from "../Elements/Button";
+import { InputForm } from "../Elements/Input";
 
 const FormLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [showPass, setShowPass] = useState("");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { user, isSuccess } = useSelector((state) => state.auth);
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
     if (user && user.role === "admin" && isSuccess) {
-      navigate("admin/home");
+      navigate("/dashboard/admin/");
     }
     if (user && user.role === "teacher" && isSuccess) {
-      navigate("teacher/home");
+      navigate("/dashboard/teacher");
     }
     if (user && user.role === "student" && isSuccess) {
-      navigate("student/home");
+      navigate("/dashboard/student");
     }
-    dispatch(reset());
+    // dispatch(reset());
   }, [user, isSuccess, navigate, dispatch]);
 
-  const Login = (event) => {
-    event.preventDefault();
-    setTimeout(() => {
-      dispatch(LoginUser({ email, password }));
-    }, 1000);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    try {
+      dispatch(login({ email, password }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // const toggleShowPass = () => {
-  //   setShowPass(!showPass);
-  // };
-
   return (
-    <form onSubmit={Login}>
-      <InputForm
-        label="Email"
-        type="email"
-        placeholder="contoh@gmail.com"
-        name="email"
-        value={email}
-        onchange={(event) => setEmail(event.target.value)}
-      />
+    <Fragment>
+      <form onSubmit={handleLogin}>
+        <InputForm
+          label="Email"
+          type="email"
+          placeholder="contoh@gmail.com"
+          name="email"
+          value={email}
+          onchange={(e) => setEmail(e.target.value)}
+        />
 
-      <InputForm
-        label="Password"
-        type="password"
-        placeholder="******"
-        name="password"
-        value={password}
-        onchange={(event) => setPassword(event.target.value)}
-      />
+        <InputForm
+          label="Password"
+          type="password"
+          placeholder="******"
+          name="password"
+          value={password}
+          onchange={(e) => setPassword(e.target.value)}
+        />
 
-      <Button classname="bg-[#03A9F4] w-full " type="submit">
-        Login
-      </Button>
-    </form>
+        <Button
+          classname="bg-[#03A9F4] w-full"
+          onClick={handleLogin}
+          type="submit"
+        >
+          Login
+        </Button>
+      </form>
+    </Fragment>
   );
 };
 

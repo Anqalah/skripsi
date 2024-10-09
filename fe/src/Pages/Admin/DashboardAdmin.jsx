@@ -1,14 +1,32 @@
-import React from "react";
+import { React, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getMe, LogOut } from "../../Features/authSlice";
 import AdminLayout from "../../components/Layouts/AdminLayout";
+import Button from "../../components/Elements/Button";
 
 const DashboardAdmin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+  }, [isError, navigate]);
+
   return (
     <AdminLayout>
       <div class="w-full px-6 py-8">
         <div class="mx-auto">
           <div class="bg-white rounded-3xl p-8 mb-5">
             <h1 class="text-3xl font-bold mb-10">
-              Website Integrasi Sistem Absensi SMK ! Palu
+              Website Integrasi Sistem Absensi LPK MALEO GOGAKUIN PALU
             </h1>
             <div class="flex items-center justify-between mb-5">
               <div class="flex items-stretch">
@@ -37,7 +55,7 @@ const DashboardAdmin = () => {
                   <div class="col-span-2">
                     <div class="p-4 bg-green-100 rounded-xl">
                       <div class="font-bold text-xl text-gray-800 leading-none">
-                        Abses Siswa
+                        Absen Siswa
                       </div>
                       <div class="mt-5">
                         <button
@@ -82,7 +100,7 @@ const DashboardAdmin = () => {
                         src="/images/logo.jpg"
                         className="w-6 h-6 rounded-full"
                       />
-                      <p>Muhammad Bilal</p>
+                      <p>Muhammad Fadhil</p>
                     </div>
                   </div>
                   <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
@@ -98,7 +116,7 @@ const DashboardAdmin = () => {
                         src="/images/logo.jpg"
                         className="w-6 h-6 rounded-full"
                       />
-                      <p>Muhammad Bilal</p>
+                      <p>Muhammad Fadhil</p>
                     </div>
                   </div>
                   <div class="p-4 bg-white border rounded-xl text-gray-800 space-y-2">
@@ -114,7 +132,7 @@ const DashboardAdmin = () => {
                         src="/images/logo.jpg"
                         className="w-6 h-6 rounded-full"
                       />
-                      <p>Muhammad Bilal</p>
+                      <p>Muhammad Fadhil</p>
                     </div>
                   </div>
                 </div>
