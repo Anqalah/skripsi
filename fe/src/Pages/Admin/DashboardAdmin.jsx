@@ -1,9 +1,8 @@
 import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getMe, LogOut } from "../../Features/authSlice";
+import { getMe } from "../../Features/authSlice";
 import AdminLayout from "../../components/Layouts/AdminLayout";
-import Button from "../../components/Elements/Button";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
