@@ -1,19 +1,17 @@
+import axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { store } from "./App/store";
 import "./index.css";
-// import axios from "axios";
-import LoginPage from "./Pages/login";
-import RegisterPage from "./Pages/register";
-// import ErrorPage from "./Pages/error";
-import axios from "axios";
 import AbsenAdmin from "./Pages/Admin/AbsenAdmin";
 import DashboardAdmin from "./Pages/Admin/DashboardAdmin";
 import StudentAdmin from "./Pages/Admin/StudentAdmin";
 import TeacherAdmin from "./Pages/Admin/TeacherAdmin";
+import LoginPage from "./Pages/login";
 import ProductsPages from "./Pages/products";
+import RegisterPage from "./Pages/register";
 import AbsenStudent from "./Pages/Student/AbsenStudent";
 import HomeStudent from "./Pages/Student/HomeStudent";
 import ProfileStudent from "./Pages/Student/ProfileStudent";
@@ -21,6 +19,7 @@ import AbsenTeacher from "./Pages/Teacher/AbsenTeacher";
 import ClassTeacher from "./Pages/Teacher/ClassTeacher";
 import HomeTeacher from "./Pages/Teacher/HomeTeacher";
 import ProfileTeacher from "./Pages/Teacher/ProfileTeacher";
+import { AddUser } from "./Pages/AddUser";
 
 axios.defaults.withCredentials = true;
 
@@ -40,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/addUser",
     element: <RegisterPage />,
+  },
+  {
+    path: "/teacher/add",
+    element: <AddUser />,
   },
   {
     path: "/products",

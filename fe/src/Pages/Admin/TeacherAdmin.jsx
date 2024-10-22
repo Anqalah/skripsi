@@ -23,8 +23,8 @@ const TeacherAdmin = () => {
   };
   return (
     <AdminLayout>
-      <Link to="/users/add">
-        <Button classname="flex my-3 py-3 px-3  bg-green-600">Tambah</Button>
+      <Link to="/teacher/add">
+        <Button classname="flex my-1 py-2 px-3  bg-green-600">Tambah</Button>
       </Link>
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
