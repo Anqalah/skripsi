@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { store } from "./App/store";
 import "./index.css";
+import AddTeacher from "./Pages/AddTeacher.jsx";
 import AbsenAdmin from "./Pages/Admin/AbsenAdmin";
 import DashboardAdmin from "./Pages/Admin/DashboardAdmin";
 import StudentAdmin from "./Pages/Admin/StudentAdmin";
@@ -19,7 +20,7 @@ import AbsenTeacher from "./Pages/Teacher/AbsenTeacher";
 import ClassTeacher from "./Pages/Teacher/ClassTeacher";
 import HomeTeacher from "./Pages/Teacher/HomeTeacher";
 import ProfileTeacher from "./Pages/Teacher/ProfileTeacher";
-import { AddUser } from "./Pages/AddUser";
+import EditTeacher from "./Pages/EditTeacher.jsx";
 
 axios.defaults.withCredentials = true;
 
@@ -42,7 +43,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/teacher/add",
-    element: <AddUser />,
+    element: <AddTeacher />,
+  },
+  {
+    path: "/teacher/edit/:id",
+    element: <EditTeacher />,
   },
   {
     path: "/products",

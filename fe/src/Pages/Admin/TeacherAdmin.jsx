@@ -42,6 +42,9 @@ const TeacherAdmin = () => {
               <th scope="col" class="px-6 py-3">
                 Wali Kelas
               </th>
+              <th scope="col" class="px-6 py-3">
+                Role
+              </th>
               <th
                 scope="col"
                 className="flex items-center justify-center px-6 py-3"
@@ -67,8 +70,9 @@ const TeacherAdmin = () => {
                 </td>
                 <td class="px-6 py-4">{user.bidang}</td>
                 <td class="px-6 py-4">{user.kelas}</td>
+                <td class="px-6 py-4">{user.role}</td>
                 <td className="flex items-center justify-center gap-2 py-2">
-                  <Link to={`/users/edit/${user.uuid}`}>
+                  <Link to={`/teacher/edit/${user.uuid}`}>
                     <Button classname="px-6 py-1 rounded-lg bg-blue-700 text-white">
                       Edit
                     </Button>

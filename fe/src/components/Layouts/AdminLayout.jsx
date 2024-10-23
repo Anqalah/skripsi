@@ -21,7 +21,7 @@ const AdminLayout = ({ children }) => {
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start rtl:justify-end">
-              MY ABSEN
+              SKRIPSI ABSEN
             </div>
             <div className="flex items-center">
               <img

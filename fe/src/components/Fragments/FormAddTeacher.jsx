@@ -5,7 +5,7 @@ import Button from "../Elements/Button";
 import axios from "axios";
 import { API_BASE_URL } from "../../config/config";
 
-export const FormAddUser = () => {
+export const FormAddTeacher = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -13,7 +13,7 @@ export const FormAddUser = () => {
   const [confPassword, setConfPassword] = useState("");
   const navigate = useNavigate();
 
-  const saveUser = async (e) => {
+  const saveTeacher = async (e) => {
     e.preventDefault();
     try {
       await axios.post(`${API_BASE_URL}/users`, {
@@ -33,7 +33,7 @@ export const FormAddUser = () => {
 
   return (
     <Fragment>
-      <form onSubmit={saveUser}>
+      <form onSubmit={saveTeacher}>
         <InputForm
           label="Name"
           type="text"
@@ -75,7 +75,7 @@ export const FormAddUser = () => {
           onchange={(e) => setConfPassword(e.target.value)}
         />
         <Button
-          onClick={saveUser}
+          onClick={saveTeacher}
           classname="bg-[#03A9F4] w-full"
           type="submit"
         >

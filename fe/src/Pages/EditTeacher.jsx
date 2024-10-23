@@ -1,13 +1,15 @@
 import { Fragment } from "react";
-import { FormAddUser } from "../components/Fragments/FormAddUser.jsx";
+import FormEditTeacher from "../components/Fragments/FormEditTeacher";
 import AdminLayout from "../components/Layouts/AdminLayout";
 
-export const AddUser = () => {
+const EditTeacher = () => {
   return (
     <Fragment>
       <AdminLayout>
-        <FormAddUser />
+        <FormEditTeacher />
       </AdminLayout>
     </Fragment>
   );
 };
+
+export default EditTeacher;
