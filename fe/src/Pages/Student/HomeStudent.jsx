@@ -1,7 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import StudentLayout from "../../components/Layouts/StudentLayout";
+import { getMe } from "../../Features/authSlice";
 
 const HomeStudent = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError, user: authUser } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const action = await dispatch(getMe());
+      if (getMe.rejected.match(action)) {
+        navigate("/");
+      }
+    };
+
+    fetchUser();
+  }, [dispatch, navigate]);
+
+  if (!authUser) return null;
+
   return (
     <StudentLayout>
       <div className="">
@@ -11,8 +31,8 @@ const HomeStudent = () => {
             alt="profile"
             className="w-24 h-24 bg-black rounded-lg"
           />
-          <div className="flex flex-col items-center">
-            <p className="text-2xl font-semibold">Muhammad Bilal</p>
+          <div className="text-center">
+            <p className="text-2xl font-semibold">{authUser.name}</p>
             <p className="italic text-xl">Pertanian</p>
             <p className="font-semibold text-lg">Kelas A</p>
           </div>
@@ -40,5 +60,4 @@ const HomeStudent = () => {
     </StudentLayout>
   );
 };
-
 export default HomeStudent;

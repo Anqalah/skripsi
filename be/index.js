@@ -1,12 +1,20 @@
-import express from "express";
+import { v2 as cloudinary } from "cloudinary";
+import SequelizeStore from "connect-session-sequelize";
 import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
 import session from "express-session";
 import db from "./config/Database.js";
-import SequelizeStore from "connect-session-sequelize";
-import dotenv from "dotenv";
-import UserRoute from "./routes/UserRoute.js";
-import ProductRoute from "./routes/ProductRoute.js";
+import AdminRoute from "./routes/AdminRoute.js";
+import AttedanceRoute from "./routes/AttedanceRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
+import StudentRoute from "./routes/StudentRoute.js";
+import TeacherRoute from "./routes/TeacherRoute.js";
+import Admins from "./models/AdminModel.js";
+import Students from "./models/StudentModel.js";
+import Attendances from "./models/AttendanceModel.js";
+import Teachers from "./models/TeacherModel.js";
+
 dotenv.config();
 
 const app = express();
@@ -14,11 +22,58 @@ const app = express();
 const sessionStore = SequelizeStore(session.Store);
 
 const store = new sessionStore({ db: db });
-// (async () => {
-//   await db.sync();
-// })();
-
+// try {
+//   await db.authenticate();
+//   await Admins.sync();
+//   await Teachers.sync();
+//   await Students.sync();
+//   await Attendances.sync();
+// } catch (error) {
+//   console.error(error);
+// }
 // store.sync();
+
+(async function () {
+  // Configuration
+  cloudinary.config({
+    cloud_name: "dw30kwicp",
+    secure: true,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET, // Click 'View API Keys' above to copy your API secret
+  });
+
+  //   // Upload an image
+  //   const uploadResult = await cloudinary.uploader
+  //     .upload(
+  //       "https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg",
+  //       {
+  //         public_id: "shoes",
+  //       }
+  //     )
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+
+  //   console.log(uploadResult);
+
+  //   // Optimize delivery by resizing and applying auto-format and auto-quality
+  //   const optimizeUrl = cloudinary.url("shoes", {
+  //     fetch_format: "auto",
+  //     quality: "auto",
+  //   });
+
+  //   console.log(optimizeUrl);
+
+  //   // Transform the image: auto-crop to square aspect_ratio
+  //   const autoCropUrl = cloudinary.url("shoes", {
+  //     crop: "auto",
+  //     gravity: "auto",
+  //     width: 500,
+  //     height: 500,
+  //   });
+
+  //   console.log(autoCropUrl);
+})();
 
 app.use(
   session({
@@ -37,8 +92,10 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(UserRoute);
-app.use(ProductRoute);
+app.use(AdminRoute);
+app.use(TeacherRoute);
+app.use(StudentRoute);
+app.use(AttedanceRoute);
 app.use(AuthRoute);
 
 app.listen(process.env.APP_PORT, () => {

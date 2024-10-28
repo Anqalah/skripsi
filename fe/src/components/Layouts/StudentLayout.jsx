@@ -20,7 +20,7 @@ const StudentLayout = ({ children }) => {
       {/* Navigation */}
       <div className="fixed bottom-0 z-10 flex justify-between items-center w-[400px] bg-white border-t-2">
         <Link
-          to={"/student"}
+          to={"/dashboard/student"}
           className="py-2 text-center cursor-pointer bg-slate-100 w-full hover:bg-slate-200"
         >
           <p>Home</p>
