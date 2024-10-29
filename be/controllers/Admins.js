@@ -4,7 +4,7 @@ import Admins from "../models/AdminModel.js";
 export const getAdmins = async (req, res) => {
   try {
     const response = await Admins.findAll({
-      attributes: ["uuid", "name", "email", "role"],
+      attributes: ["uuid", "name", "hp", "email", "role"],
     });
     res.status(200).json(response);
   } catch (error) {
@@ -15,7 +15,7 @@ export const getAdmins = async (req, res) => {
 export const getAdminById = async (req, res) => {
   try {
     const response = await Admins.findOne({
-      attributes: ["uuid", "name", "email", "role"],
+      attributes: ["uuid", "name", "email", "hp", "role"],
       where: { uuid: req.params.id },
     });
     res.status(200).json(response);
@@ -25,7 +25,7 @@ export const getAdminById = async (req, res) => {
 };
 
 export const createAdmin = async (req, res) => {
-  const { name, email, password, confPassword, role } = req.body;
+  const { name, email, password, confPassword, hp } = req.body;
   if (password !== confPassword)
     return res
       .status(400)
@@ -50,7 +50,7 @@ export const updateAdmin = async (req, res) => {
     where: { uuid: req.params.id },
   });
   if (!user) return res.status(404).json({ msg: "User Tidak Ditemukan" });
-  const { name, email, password, confPassword, role } = req.body;
+  const { name, email, password, confPassword, hp } = req.body;
   let hashPassword;
   if (password === "" || password === null) {
     hashPassword = user.password;

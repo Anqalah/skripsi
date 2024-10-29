@@ -13,13 +13,13 @@ const FormLogin = () => {
   const { user, isSuccess } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user && user.role === "admin" && isSuccess) {
+    if (user && user.role === "Admin" && isSuccess) {
       navigate("/dashboard/admin/");
     }
-    if (user && user.role === "teacher" && isSuccess) {
+    if (user && user.role === "Teacher" && isSuccess) {
       navigate("/dashboard/teacher");
     }
-    if (user && user.role === "student" && isSuccess) {
+    if (user && user.role === "Student" && isSuccess) {
       navigate("/dashboard/student");
     }
     // dispatch(reset());
