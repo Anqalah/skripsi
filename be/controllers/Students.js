@@ -1,9 +1,9 @@
 import argon2 from "argon2";
-import Admins from "../models/AdminModel.js";
+import Students from "../models/StudentModel.js";
 
 export const getStudents = async (req, res) => {
   try {
-    const response = await Admins.findAll({
+    const response = await Students.findAll({
       attributes: ["uuid", "name", "email", "role"],
     });
     res.status(200).json(response);
@@ -14,7 +14,7 @@ export const getStudents = async (req, res) => {
 
 export const getStudentById = async (req, res) => {
   try {
-    const response = await Users.findOne({
+    const response = await Students.findOne({
       attributes: ["uuid", "name", "email", "role"],
       where: { uuid: req.params.id },
     });
@@ -25,18 +25,35 @@ export const getStudentById = async (req, res) => {
 };
 
 export const createStudent = async (req, res) => {
-  const { name, email, password, confPassword, role } = req.body;
+  const {
+    name,
+    jk,
+    umur,
+    alamat,
+    hp,
+    bidang,
+    kelas,
+    email,
+    password,
+    confPassword,
+  } = req.body;
   if (password !== confPassword)
     return res
       .status(400)
       .json({ msg: "Password dan Confirm Password Harus Sama" });
   const hashPassword = await argon2.hash(password);
   try {
-    await Users.create({
+    await Students.create({
       name: name,
+      jk: jk,
+      umur: umur,
+      alamat: alamat,
+      hp: hp,
+      bidang: bidang,
+      kelas: kelas,
       email: email,
       password: hashPassword,
-      role: role,
+      role: "Student",
     });
     res.status(201).json({ msg: "Register Berhasil" });
   } catch (error) {
@@ -45,11 +62,22 @@ export const createStudent = async (req, res) => {
 };
 
 export const updateStudent = async (req, res) => {
-  const user = await Users.findOne({
+  const user = await Students.findOne({
     where: { uuid: req.params.id },
   });
   if (!user) return res.status(404).json({ msg: "User Tidak Ditemukan" });
-  const { name, email, password, confPassword, role } = req.body;
+  const {
+    name,
+    jk,
+    umur,
+    alamat,
+    hp,
+    bidang,
+    kelas,
+    email,
+    password,
+    confPassword,
+  } = req.body;
   let hashPassword;
   if (password === "" || password === null) {
     hashPassword = user.password;
@@ -61,12 +89,17 @@ export const updateStudent = async (req, res) => {
       .status(400)
       .json({ msg: "Password dan Confirm Password Harus Sama" });
   try {
-    await Users.update(
+    await Students.update(
       {
         name: name,
+        jk: jk,
+        umur: umur,
+        alamat: alamat,
+        hp: hp,
+        bidang: bidang,
+        kelas: kelas,
         email: email,
         password: hashPassword,
-        role: role,
       },
       {
         where: { id: user.id },
@@ -79,12 +112,12 @@ export const updateStudent = async (req, res) => {
 };
 
 export const deleteStudent = async (req, res) => {
-  const user = await Users.findOne({
+  const user = await Students.findOne({
     where: { uuid: req.params.id },
   });
   if (!user) return res.status(404).json({ msg: "User Tidak Ditemukan" });
   try {
-    await Users.destroy({ where: { id: user.id } });
+    await Students.destroy({ where: { id: user.id } });
     res.status(200).json({ msg: "User Deleted" });
   } catch (error) {
     res.status(400).json({ msg: error.message });

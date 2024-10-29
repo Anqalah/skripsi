@@ -1,65 +1,50 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { InputForm } from "../Elements/Input";
+import { useNavigate } from "react-router-dom";
 import Button from "../Elements/Button";
+import axios from "axios";
 import { API_BASE_URL } from "../../config/config";
 
-const FormEditTeacher = () => {
+const FormAddStudent = () => {
   const [name, setName] = useState("");
   const [jk, setJk] = useState("");
   const [umur, setUmur] = useState("");
   const [alamat, setAlamat] = useState("");
   const [hp, setHp] = useState("");
   const [email, setEmail] = useState("");
+  const [bidang, setBidang] = useState("");
+  const [kelas, setKelas] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
-  const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
 
-  useEffect(() => {
-    const getTeacherById = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/teachers/${id}`);
-        setName(response.data.name);
-        setEmail(response.data.email);
-        setRole(response.data.role);
-      } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
-      }
-    };
-    getTeacherById();
-  }, [id]);
-
-  const updateTeacher = async (e) => {
+  const saveStudent = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`${API_BASE_URL}/teachers/${id}`, {
+      await axios.post(`${API_BASE_URL}/students`, {
         name: name,
         jk: jk,
         umur: umur,
         alamat: alamat,
         hp: hp,
         email: email,
+        bidang: bidang,
+        kelas: kelas,
         password: password,
         confPassword: confPassword,
-        role: "Teacher",
+        role: "Student",
       });
-      navigate("/admin/teacher");
+      navigate("/admin/student");
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
+      {
+        console.log(error);
       }
     }
   };
 
   return (
     <Fragment>
-      <form onSubmit={updateTeacher}>
+      <form onSubmit={saveStudent}>
         <InputForm
           label="Name"
           type="text"
@@ -115,6 +100,24 @@ const FormEditTeacher = () => {
         />
 
         <InputForm
+          label="Jurusan"
+          type="text"
+          placeholder="Pertanian"
+          name="bidang"
+          value={bidang}
+          onchange={(e) => setBidang(e.target.value)}
+        />
+
+        <InputForm
+          label="Kelas"
+          type="text"
+          placeholder="A"
+          name="kelas"
+          value={kelas}
+          onchange={(e) => setKelas(e.target.value)}
+        />
+
+        <InputForm
           label="password"
           type="password"
           placeholder="******"
@@ -133,15 +136,15 @@ const FormEditTeacher = () => {
         />
 
         <Button
-          onClick={updateTeacher}
+          onClick={saveStudent}
           classname="bg-[#03A9F4] w-full"
           type="submit"
         >
-          Update
+          Register
         </Button>
       </form>
     </Fragment>
   );
 };
 
-export default FormEditTeacher;
+export default FormAddStudent;

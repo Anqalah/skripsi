@@ -10,10 +10,6 @@ import AttedanceRoute from "./routes/AttedanceRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import StudentRoute from "./routes/StudentRoute.js";
 import TeacherRoute from "./routes/TeacherRoute.js";
-import Admins from "./models/AdminModel.js";
-import Students from "./models/StudentModel.js";
-import Attendances from "./models/AttendanceModel.js";
-import Teachers from "./models/TeacherModel.js";
 
 dotenv.config();
 
@@ -92,11 +88,11 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(AuthRoute);
 app.use(AdminRoute);
 app.use(TeacherRoute);
 app.use(StudentRoute);
 app.use(AttedanceRoute);
-app.use(AuthRoute);
 
 app.listen(process.env.APP_PORT, () => {
   console.log("Server Sedang Berjalan...");

@@ -7,8 +7,11 @@ import { API_BASE_URL } from "../../config/config";
 
 export const FormAddTeacher = () => {
   const [name, setName] = useState("");
+  const [jk, setJk] = useState("");
+  const [umur, setUmur] = useState("");
+  const [alamat, setAlamat] = useState("");
+  const [hp, setHp] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const navigate = useNavigate();
@@ -16,12 +19,16 @@ export const FormAddTeacher = () => {
   const saveTeacher = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}/users`, {
+      await axios.post(`${API_BASE_URL}/teachers`, {
         name: name,
+        jk: jk,
+        umur: umur,
+        alamat: alamat,
+        hp: hp,
         email: email,
-        role: role,
         password: password,
         confPassword: confPassword,
+        role: "Teacher",
       });
       navigate("/admin/teacher");
     } catch (error) {
@@ -42,6 +49,7 @@ export const FormAddTeacher = () => {
           value={name}
           onchange={(e) => setName(e.target.value)}
         />
+
         <InputForm
           label="email"
           type="email"
@@ -50,14 +58,43 @@ export const FormAddTeacher = () => {
           value={email}
           onchange={(e) => setEmail(e.target.value)}
         />
+
         <InputForm
-          label="Role"
+          label="Jenis Kelamin"
           type="text"
-          placeholder="Guru/Murid/Admin"
-          name="role"
-          value={role}
-          onchange={(e) => setRole(e.target.value)}
+          placeholder="Laki-laki/Perempuan"
+          name="jenis kelamin"
+          value={jk}
+          onchange={(e) => setJk(e.target.value)}
         />
+
+        <InputForm
+          label="Umur"
+          type="text"
+          placeholder="...tahun"
+          name="umur"
+          value={umur}
+          onchange={(e) => setUmur(e.target.value)}
+        />
+
+        <InputForm
+          label="Alamat"
+          type="text"
+          placeholder="Jl...."
+          name="alamat"
+          value={alamat}
+          onchange={(e) => setAlamat(e.target.value)}
+        />
+
+        <InputForm
+          label="Hp"
+          type="text"
+          placeholder="08...."
+          name="hp"
+          value={hp}
+          onchange={(e) => setHp(e.target.value)}
+        />
+
         <InputForm
           label="password"
           type="password"
@@ -66,6 +103,7 @@ export const FormAddTeacher = () => {
           value={password}
           onchange={(e) => setPassword(e.target.value)}
         />
+
         <InputForm
           label="Confirm Password"
           type="password"
@@ -74,6 +112,7 @@ export const FormAddTeacher = () => {
           value={confPassword}
           onchange={(e) => setConfPassword(e.target.value)}
         />
+
         <Button
           onClick={saveTeacher}
           classname="bg-[#03A9F4] w-full"

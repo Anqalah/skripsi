@@ -13,17 +13,17 @@ const TeacherAdmin = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get(`${API_BASE_URL}/users`);
+    const response = await axios.get(`${API_BASE_URL}/teachers`);
     setUsers(response.data);
   };
 
   const deleteUser = async (userId) => {
-    await axios.delete(`${API_BASE_URL}/users/${userId}`);
+    await axios.delete(`${API_BASE_URL}/teachers/${userId}`);
     getUsers();
   };
   return (
     <AdminLayout>
-      <Link to="/teacher/add">
+      <Link to="add">
         <Button classname="flex my-1 py-2 px-3  bg-green-600">Tambah</Button>
       </Link>
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -37,13 +37,13 @@ const TeacherAdmin = () => {
                 Nama
               </th>
               <th scope="col" class="px-6 py-3">
-                Wali Kelas Jurusan
+                Jenis Kelamin
               </th>
               <th scope="col" class="px-6 py-3">
-                Wali Kelas
+                Alamat
               </th>
               <th scope="col" class="px-6 py-3">
-                Role
+                Hp
               </th>
               <th
                 scope="col"
@@ -68,9 +68,9 @@ const TeacherAdmin = () => {
                 >
                   {user.name}
                 </td>
-                <td class="px-6 py-4">{user.bidang}</td>
-                <td class="px-6 py-4">{user.kelas}</td>
-                <td class="px-6 py-4">{user.role}</td>
+                <td class="px-6 py-4">{user.jk}</td>
+                <td class="px-6 py-4">{user.alamat}</td>
+                <td class="px-6 py-4">{user.hp}</td>
                 <td className="flex items-center justify-center gap-2 py-2">
                   <Link to={`/teacher/edit/${user.uuid}`}>
                     <Button classname="px-6 py-1 rounded-lg bg-blue-700 text-white">

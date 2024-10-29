@@ -68,7 +68,6 @@ export const updateAdmin = async (req, res) => {
         email: email,
         hp: hp,
         password: hashPassword,
-        role: "Admin",
       },
       {
         where: { id: user.id },

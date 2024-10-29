@@ -6,6 +6,7 @@ import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { store } from "./App/store";
 import "./index.css";
 import AddTeacher from "./Pages/AddTeacher.jsx";
+import AddStudent from "./Pages/Student/AddStudent.jsx";
 import AbsenAdmin from "./Pages/Admin/AbsenAdmin";
 import DashboardAdmin from "./Pages/Admin/DashboardAdmin";
 import StudentAdmin from "./Pages/Admin/StudentAdmin";
@@ -40,14 +41,6 @@ const router = createBrowserRouter([
   {
     path: "/addUser",
     element: <RegisterPage />,
-  },
-  {
-    path: "/teacher/add",
-    element: <AddTeacher />,
-  },
-  {
-    path: "/teacher/edit/:id",
-    element: <EditTeacher />,
   },
   {
     path: "/products",
@@ -90,8 +83,20 @@ const router = createBrowserRouter([
     element: <TeacherAdmin />,
   },
   {
+    path: "admin/teacher/add",
+    element: <AddTeacher />,
+  },
+  {
+    path: "admin/teacher/edit/:id",
+    element: <EditTeacher />,
+  },
+  {
     path: "/admin/student",
     element: <StudentAdmin />,
+  },
+  {
+    path: "admin/student/add",
+    element: <AddStudent />,
   },
   {
     path: "/admin/absen",
