@@ -1,4 +1,6 @@
 import Admins from "../models/AdminModel.js";
+import Teachers from "../models/TeacherModel.js";
+import Students from "../models/StudentModel.js";
 
 export const verifyUser = async (req, res, next) => {
   if (!req.session.userId) {

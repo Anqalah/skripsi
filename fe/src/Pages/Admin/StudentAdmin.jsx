@@ -25,20 +25,31 @@ const StudentAdmin = () => {
   return (
     <AdminLayout>
       <Link to="add">
-        <Button classname="flex my-1 py-2 px-3  bg-green-600">Tambah</Button>
+        <Button classname="flex text-white my-1 py-2 px-3  bg-green-600">
+          Tambah
+        </Button>
       </Link>
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-6 py-3">
+                No
+              </th>
+              <th scope="col" class="px-6 py-3">
                 Nama
               </th>
               <th scope="col" class="px-6 py-3">
-                Jurusan
+                Kelas
               </th>
               <th scope="col" class="px-6 py-3">
-                Kelas
+                Jenis Kelamin
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Hp
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Jurusan
               </th>
               <th scope="col" class="px-6 py-3">
                 Aksi
@@ -57,10 +68,12 @@ const StudentAdmin = () => {
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {user.name}
                 </td>
-                <td className="px-6 py-4">{user.bidang}</td>
                 <td className="px-6 py-4">{user.kelas}</td>
+                <td className="px-6 py-4">{user.jk}</td>
+                <td className="px-6 py-4">{user.hp}</td>
+                <td className="px-6 py-4">{user.bidang}</td>
                 <td className="flex items-center justify-center gap-2 py-2">
-                  <Link to={`/student/edit/${user.uuid}`}>
+                  <Link to={`/admin/student/edit/${user.uuid}`}>
                     <Button classname="px-6 py-1 rounded-lg bg-blue-700 text-white">
                       Edit
                     </Button>

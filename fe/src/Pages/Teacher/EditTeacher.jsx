@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import FormEditTeacher from "../components/Fragments/FormEditTeacher";
-import AdminLayout from "../components/Layouts/AdminLayout";
+import FormEditTeacher from "../../components/Fragments/FormEditTeacher";
+import AdminLayout from "../../components/Layouts/AdminLayout";
 
 const EditTeacher = () => {
   return (

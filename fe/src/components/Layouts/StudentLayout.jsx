@@ -8,7 +8,7 @@ const StudentLayout = ({ children }) => {
       <div className="sticky top-0 z-10 flex justify-between items-center py-2 px-5 border-b-2 bg-white">
         <p>Student</p>
         <img
-          src="/images/logo.jpg"
+          src="/public/images/shoes1.jpg"
           alt="profile"
           className="w-7 h-7 bg-black rounded-full"
         />
@@ -20,7 +20,7 @@ const StudentLayout = ({ children }) => {
       {/* Navigation */}
       <div className="fixed bottom-0 z-10 flex justify-between items-center w-[400px] bg-white border-t-2">
         <Link
-          to={"/dashboard/student"}
+          to={"/student/dashboard"}
           className="py-2 text-center cursor-pointer bg-slate-100 w-full hover:bg-slate-200"
         >
           <p>Home</p>

@@ -1,18 +1,17 @@
 import express from "express";
-import {
-  getAdmins,
-  getAdminById,
-  createAdmin,
-  updateAdmin,
-  deleteAdmin,
-} from "../controllers/Admins.js";
-import { verifyUser } from "../middleware/AuthUsers.js";
+import { upload } from "../middleware/Multer.js"; // Sesuaikan dengan lokasi file upload
+import { clockIn, clockOut } from "../controllers/Attedances.js";
 const router = express.Router();
 
-router.get("/admins", verifyUser, getAdmins);
-router.get("/admins/:id", verifyUser, getAdminById);
-router.post("/admins", verifyUser, createAdmin);
-router.patch("/admins/:id", verifyUser, updateAdmin);
-router.delete("/admins/:id", verifyUser, deleteAdmin);
+router.post(
+  "/attendance/clock-in/:id",
+  upload.single("facePhotoClockIn"),
+  clockIn
+);
+router.post(
+  "/attendance/clock-out",
+  upload.single("facePhotoClockOut"),
+  clockOut
+);
 
 export default router;

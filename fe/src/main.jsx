@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { store } from "./App/store";
 import "./index.css";
-import AddTeacher from "./Pages/AddTeacher.jsx";
+import AddTeacher from "./Pages/Teacher/AddTeacher.jsx";
 import AddStudent from "./Pages/Student/AddStudent.jsx";
 import AbsenAdmin from "./Pages/Admin/AbsenAdmin";
 import DashboardAdmin from "./Pages/Admin/DashboardAdmin";
@@ -21,7 +21,8 @@ import AbsenTeacher from "./Pages/Teacher/AbsenTeacher";
 import ClassTeacher from "./Pages/Teacher/ClassTeacher";
 import HomeTeacher from "./Pages/Teacher/HomeTeacher";
 import ProfileTeacher from "./Pages/Teacher/ProfileTeacher";
-import EditTeacher from "./Pages/EditTeacher.jsx";
+import EditTeacher from "./Pages/Teacher/EditTeacher.jsx";
+import EditAdmin from "./Pages/Admin/EditAdmin.jsx";
 
 axios.defaults.withCredentials = true;
 
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
     element: <ProductsPages />,
   },
   {
-    path: "/dashboard/student",
+    path: "/student/dashboard",
     element: <HomeStudent />,
   },
   {
@@ -75,8 +76,12 @@ const router = createBrowserRouter([
     element: <ProfileTeacher />,
   },
   {
-    path: "/dashboard/admin",
+    path: "/admin/dashboard",
     element: <DashboardAdmin />,
+  },
+  {
+    path: "/admin/edit/:id",
+    element: <EditAdmin />,
   },
   {
     path: "/admin/teacher",
@@ -87,7 +92,7 @@ const router = createBrowserRouter([
     element: <AddTeacher />,
   },
   {
-    path: "admin/teacher/edit/:id",
+    path: "/admin/teacher/edit/:id",
     element: <EditTeacher />,
   },
   {
@@ -97,6 +102,10 @@ const router = createBrowserRouter([
   {
     path: "admin/student/add",
     element: <AddStudent />,
+  },
+  {
+    path: "admin/student/edit/:id",
+    // element: <EditStudent />,
   },
   {
     path: "/admin/absen",

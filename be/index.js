@@ -20,10 +20,10 @@ const sessionStore = SequelizeStore(session.Store);
 const store = new sessionStore({ db: db });
 // try {
 //   await db.authenticate();
-//   await Admins.sync();
+// await Admins.sync({ force: true });
 //   await Teachers.sync();
 //   await Students.sync();
-//   await Attendances.sync();
+//   await Attendances.sync({ force: true });
 // } catch (error) {
 //   console.error(error);
 // }

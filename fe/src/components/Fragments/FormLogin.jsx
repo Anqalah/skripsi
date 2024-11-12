@@ -14,13 +14,13 @@ const FormLogin = () => {
 
   useEffect(() => {
     if (user && user.role === "Admin" && isSuccess) {
-      navigate("/dashboard/admin/");
+      navigate("/admin/dashboard/");
     }
     if (user && user.role === "Teacher" && isSuccess) {
-      navigate("/dashboard/teacher");
+      navigate("/teacher/dashboard");
     }
     if (user && user.role === "Student" && isSuccess) {
-      navigate("/dashboard/student");
+      navigate("/student/dashboard");
     }
     // dispatch(reset());
   }, [user, isSuccess, navigate, dispatch]);
@@ -56,7 +56,7 @@ const FormLogin = () => {
         />
 
         <Button
-          classname="bg-[#03A9F4] w-full"
+          classname="text-white bg-[#03A9F4] w-full"
           onClick={handleLogin}
           type="submit"
         >

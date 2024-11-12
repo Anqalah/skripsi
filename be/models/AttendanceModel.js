@@ -14,7 +14,34 @@ const Attendances = db.define(
         notEmpty: true,
       },
     },
-    foto: {
+    clockIn: {
+      type: DataTypes.DATE,
+    },
+    clockOut: {
+      type: DataTypes.DATE,
+    },
+    date: {
+      type: DataTypes.DATEONLY,
+    },
+    locationClockIn: {
+      type: DataTypes.STRING,
+    },
+    locationClockOut: {
+      type: DataTypes.STRING,
+    },
+    facePhotoClockIn: {
+      type: DataTypes.STRING,
+    },
+    facePhotoClockInUrl: {
+      type: DataTypes.STRING,
+    },
+    facePhotoClockOut: {
+      type: DataTypes.STRING,
+    },
+    facePhotoClockOutUrl: {
+      type: DataTypes.STRING,
+    },
+    locationClockOut: {
       type: DataTypes.STRING,
     },
   },

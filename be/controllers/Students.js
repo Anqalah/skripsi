@@ -1,10 +1,36 @@
 import argon2 from "argon2";
 import Students from "../models/StudentModel.js";
+import Attendances from "../models/AttendanceModel.js";
 
 export const getStudents = async (req, res) => {
   try {
     const response = await Students.findAll({
-      attributes: ["uuid", "name", "email", "role"],
+      attributes: [
+        "uuid",
+        "name",
+        "kelas",
+        "jk",
+        "hp",
+        "bidang",
+        "email",
+        "role",
+      ],
+      include: [
+        {
+          model: Attendances,
+          attributes: [
+            "ClockIn",
+            "ClockOut",
+            "Date",
+            "LocationClockIn",
+            "LocationClockOut",
+            "facePhotoClockIn",
+            "facePhotoClockInUrl",
+            "facePhotoClockOut",
+            "facePhotoClockOutUrl",
+          ],
+        },
+      ],
     });
     res.status(200).json(response);
   } catch (error) {
@@ -15,7 +41,16 @@ export const getStudents = async (req, res) => {
 export const getStudentById = async (req, res) => {
   try {
     const response = await Students.findOne({
-      attributes: ["uuid", "name", "email", "role"],
+      attributes: [
+        "uuid",
+        "name",
+        "kelas",
+        "jk",
+        "hp",
+        "bidang",
+        "email",
+        "role",
+      ],
       where: { uuid: req.params.id },
     });
     res.status(200).json(response);

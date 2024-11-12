@@ -24,7 +24,9 @@ const TeacherAdmin = () => {
   return (
     <AdminLayout>
       <Link to="add">
-        <Button classname="flex my-1 py-2 px-3  bg-green-600">Tambah</Button>
+        <Button classname="flex my-1 py-2 px-3 text-white bg-green-600">
+          Tambah
+        </Button>
       </Link>
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -72,7 +74,7 @@ const TeacherAdmin = () => {
                 <td class="px-6 py-4">{user.alamat}</td>
                 <td class="px-6 py-4">{user.hp}</td>
                 <td className="flex items-center justify-center gap-2 py-2">
-                  <Link to={`/teacher/edit/${user.uuid}`}>
+                  <Link to={`/admin/teacher/edit/${user.uuid}`}>
                     <Button classname="px-6 py-1 rounded-lg bg-blue-700 text-white">
                       Edit
                     </Button>
