@@ -67,7 +67,7 @@ const AdminLayout = ({ children }) => {
             </a>
           </li>
         </ul>
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <div className="flex items-center h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
           <div className="relative">
             <img
               className="w-12 h-12 rounded-full cursor-pointer"
@@ -77,7 +77,7 @@ const AdminLayout = ({ children }) => {
               onClick={toggleProfilePopup}
             />
             {isProfileOpen && (
-              <div className="absolute right-0 w-64 mt-2 bg-white rounded-lg shadow-lg z-50 border border-gray-200">
+              <div className="relative right-0 w-64 mt-2 bg-white rounded-lg shadow-lg z-50 border border-gray-200">
                 <div className="p-4 flex items-center">
                   <img
                     className="w-12 h-12 rounded-full mr-3"

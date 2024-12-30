@@ -1,5 +1,8 @@
-const AttendancePage = () => {
-  return <FormAttendance />;
-};
+// import ClockIn from "./Student/ClockIn";
+// import ClockOut from "./Student/ClockOut";
 
-export default AttendancePage;
+// const AttendancePage = () => {
+//   return (<ClockIn />), (<ClockOut />);
+// };
+
+// export default AttendancePage;

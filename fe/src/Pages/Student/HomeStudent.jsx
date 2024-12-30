@@ -19,7 +19,6 @@ const HomeStudent = () => {
 
     fetchUser();
   }, [dispatch, navigate]);
-
   if (!authUser) return null;
 
   return (
@@ -33,8 +32,8 @@ const HomeStudent = () => {
           />
           <div className="text-center">
             <p className="text-2xl font-semibold">{authUser.name}</p>
-            <p className="italic text-xl">Pertanian</p>
-            <p className="font-semibold text-lg">Kelas A</p>
+            <p className="italic text-xl">{authUser.bidang}</p>
+            <p className="font-semibold text-lg">{authUser.kelas}</p>
           </div>
           <div className="w-full flex items-center justify-around">
             <div className="flex flex-col justify-center items-center px-5 py-3 rounded-lg border">
@@ -51,7 +50,7 @@ const HomeStudent = () => {
             </div>
           </div>
           <div className="flex justify-center mt-10">
-            <Link to="add/attendances">
+            <Link to={`/attendances/clockin/${authUser.uuid}`}>
               <button className="px-10 py-2 rounded-lg bg-slate-300">
                 Isi Kehadiran
               </button>

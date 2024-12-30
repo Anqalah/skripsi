@@ -23,6 +23,8 @@ import HomeTeacher from "./Pages/Teacher/HomeTeacher";
 import ProfileTeacher from "./Pages/Teacher/ProfileTeacher";
 import EditTeacher from "./Pages/Teacher/EditTeacher.jsx";
 import EditAdmin from "./Pages/Admin/EditAdmin.jsx";
+import ClockOut from "./Pages/Student/ClockOut.jsx";
+import ClockIn from "./Pages/Student/ClockIn.jsx";
 
 axios.defaults.withCredentials = true;
 
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
   {
     path: "/student/profile",
     element: <ProfileStudent />,
+  },
+  {
+    path: "/attendances/clockin/:id",
+    element: <ClockIn />,
+  },
+  {
+    path: "/attendances/clockout/:id",
+    element: <ClockOut />,
   },
   {
     path: "/dashboard/teacher",
