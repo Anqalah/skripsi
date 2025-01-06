@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../config/config";
 import { useNavigate } from "react-router-dom";
-// import LocationMap from "./LocationMap";
+import StudentLayout from "../../components/Layouts/StudentLayout";
+import LocationMap from "../../components/Elements/LocationMap/LocationMap";
 
 const ClockIn = () => {
   const [latitude, setLatitude] = useState(null);
@@ -108,66 +109,68 @@ const ClockIn = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h2 className="text-xl font-semibold mb-4">Clock In Siswa</h2>
+    <StudentLayout>
+      <div className="max-w-md mx-auto p-4">
+        <h2 className="text-xl font-semibold mb-4">Clock In Siswa</h2>
 
-      <button
-        type="button"
-        onClick={getLocation}
-        className="w-full bg-green-500 text-white p-2 rounded mb-4"
-      >
-        Dapatkan Lokasi
-      </button>
+        <button
+          type="button"
+          onClick={getLocation}
+          className="w-full bg-green-500 text-white p-2 rounded mb-4"
+        >
+          Dapatkan Lokasi
+        </button>
 
-      {latitude && longitude && (
+        {latitude && longitude && (
+          <div className="mb-4">
+            <p>Latitude: {latitude}</p>
+            <p>Longitude: {longitude}</p>
+          </div>
+        )}
+
+        {latitude && longitude && (
+          <LocationMap latitude={latitude} longitude={longitude} />
+        )}
+
         <div className="mb-4">
-          <p>Latitude: {latitude}</p>
-          <p>Longitude: {longitude}</p>
-        </div>
-      )}
-
-      {latitude && longitude && (
-        <LocationMap latitude={latitude} longitude={longitude} />
-      )}
-
-      <div className="mb-4">
-        <video
-          ref={videoRef}
-          autoPlay
-          className="w-full border border-gray-300 rounded"
-        />
-        <canvas ref={canvasRef} style={{ display: "none" }} />
-      </div>
-
-      <button
-        type="button"
-        onClick={captureImage}
-        className="w-full bg-blue-500 text-white p-2 rounded mb-4"
-      >
-        Ambil Foto Wajah
-      </button>
-
-      {imageSrc && (
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold">Foto Wajah:</h3>
-          <img
-            src={imageSrc}
-            alt="Captured face"
+          <video
+            ref={videoRef}
+            autoPlay
             className="w-full border border-gray-300 rounded"
           />
+          <canvas ref={canvasRef} style={{ display: "none" }} />
         </div>
-      )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
         <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded"
+          type="button"
+          onClick={captureImage}
+          className="w-full bg-blue-500 text-white p-2 rounded mb-4"
         >
-          Clock In
+          Ambil Foto Wajah
         </button>
-        {message && <p className="text-red-500">{message}</p>}
-      </form>
-    </div>
+
+        {imageSrc && (
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold">Foto Wajah:</h3>
+            <img
+              src={imageSrc}
+              alt="Captured face"
+              className="w-full border border-gray-300 rounded"
+            />
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded"
+          >
+            Clock In
+          </button>
+          {message && <p className="text-red-500">{message}</p>}
+        </form>
+      </div>
+    </StudentLayout>
   );
 };
 
