@@ -25,6 +25,7 @@ import EditTeacher from "./Pages/Teacher/EditTeacher.jsx";
 import EditAdmin from "./Pages/Admin/EditAdmin.jsx";
 import ClockOut from "./Pages/Student/ClockOut.jsx";
 import ClockIn from "./Pages/Student/ClockIn.jsx";
+import ClockInResults from "./Pages/Student/ClockInResult.jsx";
 
 axios.defaults.withCredentials = true;
 
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: "/addUser",
+    path: "/register",
     element: <RegisterPage />,
   },
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: "/attendances/clockin/:id",
     element: <ClockIn />,
+  },
+  {
+    path: "/attendances/clockin-results",
+    element: <ClockInResults />,
   },
   {
     path: "/attendances/clockout/:id",

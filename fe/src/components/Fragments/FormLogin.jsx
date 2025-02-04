@@ -43,7 +43,7 @@ const FormLogin = () => {
           placeholder="contoh@gmail.com"
           name="email"
           value={email}
-          onchange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <InputForm
@@ -52,7 +52,7 @@ const FormLogin = () => {
           placeholder="******"
           name="password"
           value={password}
-          onchange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <Button

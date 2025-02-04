@@ -1,18 +1,26 @@
-import Label from "./Label";
-import Input from "./Input";
+// Pastikan menggunakan ekspor yang benar
+export const InputForm = ({
+  label,
+  type,
+  placeholder,
+  name,
+  value,
+  onChange,
+}) => (
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2">
+      {label}
+    </label>
+    <input
+      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      type={type}
+      placeholder={placeholder}
+      name={name}
+      value={value}
+      onChange={onChange} // Perhatikan huruf besar 'C' di onChange
+    />
+  </div>
+);
 
-export const InputForm = (props) => {
-  const { name, label, type, placeholder, value, onchange } = props;
-  return (
-    <div className="mb-6">
-      <Label htmlFor={name}>{label}</Label>
-      <Input
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onchange={onchange}
-      />
-    </div>
-  );
-};
+// Atau jika menggunakan default export
+// export default InputForm;

@@ -17,9 +17,20 @@ const ClockIn = () => {
 
   useEffect(() => {
     getUser();
+    startVideo();
   }, []);
 
-  useEffect(() => {
+  const getUser = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/me`);
+      setUser(response.data);
+    } catch (error) {
+      console.error("Error fetching user data: ", error);
+      setMessage("Failed to load user data.");
+    }
+  };
+
+  const startVideo = () => {
     if (videoRef.current) {
       navigator.mediaDevices
         .getUserMedia({ video: true })
@@ -30,16 +41,6 @@ const ClockIn = () => {
           console.error("Error accessing webcam: ", error);
           setMessage("Unable to access camera.");
         });
-    }
-  }, [videoRef]);
-
-  const getUser = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/me`);
-      setUser(response.data);
-    } catch (error) {
-      console.error("Error fetching user data: ", error);
-      setMessage("Failed to load user data.");
     }
   };
 
@@ -67,18 +68,25 @@ const ClockIn = () => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext("2d").drawImage(video, 0, 0);
-    setImageSrc(canvas.toDataURL("image/png"));
+    if (video) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext("2d").drawImage(video, 0, 0);
+      setImageSrc(canvas.toDataURL("image/png"));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!latitude || !longitude || !imageSrc) {
+      setMessage("Please ensure all fields are filled.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
-    formData.append("facePhotoClockIn", dataURLtoBlob(imageSrc)); // Convert base64 to Blob
+    formData.append("facePhotoClockIn", dataURLtoBlob(imageSrc));
 
     try {
       const response = await axios.post(
@@ -90,11 +98,11 @@ const ClockIn = () => {
           },
         }
       );
-      navigate("/student/dashboard");
       setMessage(response.data.msg);
+      navigate("/attendances/clockin-results/");
     } catch (error) {
       console.error("Error during submission:", error);
-      setMessage(error.response?.data?.msg || "Terjadi kesalahan");
+      setMessage(error.response?.data?.msg || "An error occurred");
     }
   };
 

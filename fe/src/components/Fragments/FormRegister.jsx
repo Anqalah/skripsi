@@ -1,37 +1,45 @@
-import Button from "../Elements/Button";
-import { InputForm } from "../Elements/Input";
+import { useState } from "react";
+import AuthLayout from "../Layouts/AuthLayouts";
+import PersonalDataForm from "../auth/PersonalDataForm";
+import FaceVerification from "../auth/FaceVerification";
 
-const FormRegister = () => {
+const RegisterPage = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [faceData, setFaceData] = useState(null);
+
+  const handleFormSubmit = (data) => {
+    setFormData(data);
+    setCurrentStep(2);
+  };
+
+  const handleFaceSubmit = (faceImages) => {
+    setFaceData(faceImages);
+    // Submit all data
+    console.log("Final Submission:", { ...formData, faceData: faceImages });
+    alert("Registration successful!");
+  };
+
   return (
-    <form action="">
-      <InputForm
-        label="name"
-        type="text"
-        placeholder="Masukkan nama anda"
-        name="name"
-      />
-      <InputForm
-        label="email"
-        type="email"
-        placeholder="contoh@gmail.com"
-        name="email"
-      />
-      <InputForm
-        label="password"
-        type="password"
-        placeholder="******"
-        name="password"
-      />
-      <InputForm
-        label="Confirm Password"
-        type="password"
-        placeholder="******"
-        name="confirmPassword"
-      />
-      <Button classname="bg-[#03A9F4] w-full" type="submit">
-        Register
-      </Button>
-    </form>
+    <AuthLayout currentStep={currentStep}>
+      {currentStep === 1 ? (
+        <PersonalDataForm
+          initialValues={formData}
+          onSubmit={handleFormSubmit}
+        />
+      ) : (
+        <FaceVerification
+          onBack={() => setCurrentStep(1)}
+          onSubmit={handleFaceSubmit}
+        />
+      )}
+    </AuthLayout>
   );
 };
-export default FormRegister;
+
+export default RegisterPage;
