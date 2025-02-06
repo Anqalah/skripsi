@@ -11,10 +11,10 @@ export default {
         sans: ["Inter", "sans-serif"],
       },
       colors: {
-        purpleMain: "#7e3af2",
-        purpleLight: "#a78bfa",
-        blueMain: "#e0f2fe",
-        textMain: "#1e293b",
+        primary: '#2563eb',
+        secondary: '#7c3aed',
+        accent: '#2dd4bf',
+        neutral: '#64748b'
       },
       utilities: {
         ".hide-scrollbar": {
