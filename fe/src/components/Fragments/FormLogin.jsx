@@ -1,70 +1,66 @@
-import { Fragment, React, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../Features/authSlice";
-import Button from "../Elements/Button";
-import { InputForm } from "../Elements/Input";
+// LoginPage.jsx
+import { Link } from "react-router-dom";
+import AuthLayout from "../Layouts/AuthLayouts";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
-const FormLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user, isSuccess } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (user && user.role === "Admin" && isSuccess) {
-      navigate("/admin/dashboard/");
-    }
-    if (user && user.role === "Teacher" && isSuccess) {
-      navigate("/teacher/dashboard");
-    }
-    if (user && user.role === "Student" && isSuccess) {
-      navigate("/student/dashboard");
-    }
-    // dispatch(reset());
-  }, [user, isSuccess, navigate, dispatch]);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    try {
-      dispatch(login({ email, password }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Fragment>
-      <form onSubmit={handleLogin}>
-        <InputForm
-          label="Email"
-          type="email"
-          placeholder="contoh@gmail.com"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <AuthLayout title="Masuk ke Akun" type="login">
+      {/* Login Form */}
+      <form className="space-y-6">
+        <div className="space-y-4">
+          {/* Email Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all"
+              placeholder="contoh@email.com"
+            />
+          </div>
 
-        <InputForm
-          label="Password"
-          type="password"
-          placeholder="******"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          {/* Password Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all pr-12"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3.5 text-gray-400 hover:text-primary transition-colors"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="w-6 h-6" />
+                ) : (
+                  <EyeIcon className="w-6 h-6" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
 
-        <Button
-          className="text-white bg-[#03A9F4] w-full"
-          onClick={handleLogin}
+        {/* Login Button */}
+        <button
           type="submit"
+          className="w-full bg-primary hover:bg-blue-600 text-white py-3.5 px-6 rounded-lg font-semibold 
+                     transition-colors shadow-sm hover:shadow-md flex items-center justify-center gap-2"
         >
-          Login
-        </Button>
+          Masuk Sekarang
+        </button>
       </form>
-    </Fragment>
+    </AuthLayout>
   );
 };
 
-export default FormLogin;
+export default LoginPage;

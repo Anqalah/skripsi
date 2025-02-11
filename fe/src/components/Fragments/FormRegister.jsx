@@ -2,7 +2,8 @@
 import { useState } from "react";
 import AuthLayout from "../Layouts/AuthLayouts";
 import { Link } from "react-router-dom";
-import { CameraIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { CameraIcon } from "@heroicons/react/24/outline";
+import Button from "../Elements/Button";
 
 const RegisterPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -12,6 +13,7 @@ const RegisterPage = () => {
     password: "",
     confirmPassword: "",
   });
+  const [faceData, setFaceData] = useState(null);
 
   const handleFormSubmit = (data) => {
     setFormData(data);
@@ -19,13 +21,14 @@ const RegisterPage = () => {
   };
 
   const handleFaceSubmit = (faceImages) => {
+    setFaceData(faceImages);
     console.log("Final Submission:", { ...formData, faceData: faceImages });
     alert("Registrasi berhasil!");
   };
 
   return (
     <AuthLayout
-      title={currentStep === 1 ? "Buat Akun Baru" : "Verifikasi Wajah"}
+      title={currentStep === 1 ? "Daftar Akun Baru" : "Verifikasi Wajah"}
       type="register"
       currentStep={currentStep}
     >
@@ -46,7 +49,6 @@ const RegisterPage = () => {
 
 const PersonalDataForm = ({ initialValues, onSubmit }) => {
   const [formData, setFormData] = useState(initialValues);
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -114,13 +116,12 @@ const PersonalDataForm = ({ initialValues, onSubmit }) => {
           />
         </div>
       </div>
-
       <button
         type="submit"
-        className="w-full bg-primary hover:bg-blue-600 text-white py-3.5 px-6 rounded-lg font-semibold 
+        className=" flex justify-center gap-4 w-full bg-primary hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold 
                    transition-colors shadow-sm hover:shadow-md"
       >
-        Daftar Sekarang
+        Verifikasi
       </button>
     </form>
   );
@@ -130,6 +131,7 @@ const FaceVerification = ({ onBack, onSubmit }) => {
   const [images, setImages] = useState([]);
 
   const handleTakePhoto = () => {
+    // Implement camera capture logic here
     const fakeImages = ["photo1", "photo2", "photo3"];
     setImages(fakeImages);
     onSubmit(fakeImages);
@@ -137,15 +139,6 @@ const FaceVerification = ({ onBack, onSubmit }) => {
 
   return (
     <div className="space-y-6">
-      <button
-        type="button"
-        onClick={onBack}
-        className="flex items-center text-gray-600 hover:text-primary transition-colors"
-      >
-        <ArrowLeftIcon className="w-5 h-5 mr-2" />
-        Kembali ke Form Data Diri
-      </button>
-
       <div className="bg-gray-50 rounded-xl p-6 text-center">
         <div className="mx-auto mb-4 w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
           <CameraIcon className="w-12 h-12 text-gray-400" />
@@ -153,25 +146,29 @@ const FaceVerification = ({ onBack, onSubmit }) => {
         <p className="text-gray-600 text-sm mb-4">
           Pastikan wajah terlihat jelas dengan pencahayaan cukup
         </p>
-
-        <div className="flex justify-center gap-2 mb-6">
+        <div className="flex justify-center gap-2">
           {images.map((_, index) => (
-            <div
-              key={index}
-              className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center"
-            >
-              <div className="w-4 h-4 bg-primary rounded-full"></div>
-            </div>
+            <div key={index} className="w-8 h-8 bg-primary rounded-full" />
           ))}
         </div>
+      </div>
 
+      <div className="flex gap-4">
+        <button
+          type="button"
+          onClick={onBack}
+          className="flex-1 py-3 px-6 rounded-lg border border-gray-200 text-gray-600 
+                     hover:bg-gray-50 transition-colors"
+        >
+          Kembali
+        </button>
         <button
           type="button"
           onClick={handleTakePhoto}
-          className="w-full bg-primary hover:bg-blue-600 text-white py-3.5 px-6 rounded-lg font-semibold 
-                     transition-colors shadow-sm hover:shadow-md"
+          className="flex-1 bg-primary hover:bg-blue-600 text-white py-3 px-6 
+                     rounded-lg font-semibold transition-colors"
         >
-          Ambil Foto Wajah
+          Ambil Foto
         </button>
       </div>
     </div>
