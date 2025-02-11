@@ -7,7 +7,10 @@ const AuthLayout = (props) => {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl">
         {/* Logo/Header Section */}
         <div className="mb-8 text-center">
-          <div className="inline-block bg-gradient-to-r from-blue-600 to-indigo-500 p-3 rounded-2xl mb-6">
+          <div
+            href="logo.jpg"
+            className="inline-block bg-gradient-to-r from-blue-600 to-indigo-500 p-3 rounded-2xl mb-6"
+          >
             <svg
               className="w-8 h-8 text-white"
               fill="none"
@@ -32,10 +35,8 @@ const AuthLayout = (props) => {
               : "Daftarkan diri Anda untuk memulai"}
           </p>
         </div>
-
         {/* Content */}
-        <div className="space-y-6">{children}</div>
-
+        <div>{children}</div>
         {/* Footer Link */}
         <div className="mt-8 text-center text-sm text-gray-500">
           {type === "login" ? (
@@ -60,7 +61,6 @@ const AuthLayout = (props) => {
             </span>
           )}
         </div>
-
         {/* Decorative Accent */}
         <div className="mt-8 border-t pt-6 text-center">
           <span className="text-xs text-gray-400">

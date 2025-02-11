@@ -56,7 +56,7 @@ const FormLogin = () => {
         />
 
         <Button
-          classname="text-white bg-[#03A9F4] w-full"
+          className="text-white bg-[#03A9F4] w-full"
           onClick={handleLogin}
           type="submit"
         >

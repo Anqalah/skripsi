@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getMe } from "../../Features/authSlice";
-import { 
-  HomeIcon,
-  ClockIcon,
-  CameraIcon,
-} from "@heroicons/react/24/outline";
+import { HomeIcon, ClockIcon, CameraIcon } from "@heroicons/react/24/outline";
 
 const StudentLayout = ({ children }) => {
   const dispatch = useDispatch(); // Tambahkan ini
@@ -27,7 +23,7 @@ const StudentLayout = ({ children }) => {
       }
     };
 
-    if(authUser) {
+    if (authUser) {
       fetchUser();
     }
   }, [dispatch, navigate, authUser]); // Tambahkan authUser ke dependencies
@@ -51,7 +47,6 @@ const StudentLayout = ({ children }) => {
 
   if (!authUser) return null;
 
-
   return (
     <div className="relative w-full max-w-md h-screen mx-auto bg-neutral-50 overflow-y-auto">
       {/* Header */}
@@ -60,7 +55,7 @@ const StudentLayout = ({ children }) => {
           <div className="flex items-center gap-4">
             {/* Tombol header dihapus */}
           </div>
-          
+
           <div className="relative">
             <img
               src="/images/shoes1.jpg"
@@ -68,12 +63,12 @@ const StudentLayout = ({ children }) => {
               className="w-10 h-10 rounded-full cursor-pointer border-2 border-white shadow-md"
               onClick={() => setShowUserModal(!showUserModal)}
             />
-            
+
             {/* User Modal */}
             {showUserModal && (
               <div className="absolute right-0 top-12 w-48 bg-white rounded-lg shadow-xl border border-neutral-200">
                 <div className="p-4 space-y-3">
-                  <button 
+                  <button
                     onClick={() => {
                       navigate("/student/profile");
                       setShowUserModal(false);
@@ -95,49 +90,47 @@ const StudentLayout = ({ children }) => {
       {/* Main Content */}
       <main className="p-4 min-h-[calc(100vh-160px)]">{children}</main>
 
-       {/* Bottom Navigation */}
-       <nav className="bg-white border-t border-gray-200 py-2 shadow-lg">
+      {/* Bottom Navigation */}
+      <nav className="bg-white border-t border-gray-200 py-2 shadow-lg">
         <div className="flex justify-around items-center px-2">
           {/* Home */}
           <Link
             to="/student/dashboard"
             className={`flex flex-col items-center px-4 py-2 rounded-lg ${
-              activeTab === 'home' ? 'text-blue-500' : 'text-gray-500'
+              activeTab === "home" ? "text-blue-500" : "text-gray-500"
             }`}
-            onClick={() => setActiveTab('home')}
+            onClick={() => setActiveTab("home")}
           >
             <HomeIcon className="w-6 h-6 mb-1" />
             <span className="text-xs">Home</span>
           </Link>
 
-{/* Scan Button */}
-<Link
-              to={
-                hasClockedIn
-                  ? `/attendances/clockout/${authUser.uuid}`
-                  : `/attendances/clockin/${authUser.uuid}`
-              }
-            >
-<button
-            onClick={() => setIsClockedIn(!isClockedIn)}
-            className={`p-4 rounded-full -mt-8 shadow-lg ${
-              isClockedIn 
-                ? 'bg-red-500 hover:bg-red-600' 
-                : 'bg-blue-500 hover:bg-blue-600'
-            } transition-colors`}
+          {/* Scan Button */}
+          <Link
+            to={
+              hasClockedIn
+                ? `/attendances/clockout/${authUser.uuid}`
+                : `/attendances/clockin/${authUser.uuid}`
+            }
           >
-            <CameraIcon className="w-8 h-8 text-white" />
-           </button>
-           </Link>
+            <button
+              onClick={() => setIsClockedIn(!isClockedIn)}
+              className={`p-4 rounded-full -mt-8 shadow-lg ${
+                isClockedIn
+                  ? "bg-red-500 hover:bg-red-600"
+                  : "bg-blue-500 hover:bg-blue-600"
+              } transition-colors`}
+            >
+              <CameraIcon className="w-8 h-8 text-white" />
+            </button>
+          </Link>
 
           {/* History */}
           <Link
             to="/student/absen"
             className={`flex flex-col items-center px-4 py-2 rounded-lg 
-              ${activeTab === 'history' ? 'text-blue-500' : 'text-gray-500'
-            }`
-          }
-            onClick={() => setActiveTab('history')}
+              ${activeTab === "history" ? "text-blue-500" : "text-gray-500"}`}
+            onClick={() => setActiveTab("history")}
           >
             <ClockIcon className="w-6 h-6 mb-1" />
             <span className="text-xs">History</span>
@@ -146,7 +139,6 @@ const StudentLayout = ({ children }) => {
       </nav>
     </div>
   );
-}
-    
+};
 
 export default StudentLayout;

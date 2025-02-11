@@ -61,8 +61,8 @@ const PersonalDataForm = ({ initialValues, onSubmit }) => {
               {...register("password", {
                 required: "Password wajib diisi",
                 minLength: {
-                  value: 8,
-                  message: "Password minimal 8 karakter",
+                  value: 4,
+                  message: "Password minimal 4 karakter",
                 },
               })}
               className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
