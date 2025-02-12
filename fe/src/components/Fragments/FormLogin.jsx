@@ -1,8 +1,7 @@
 // LoginPage.jsx
-import { Link } from "react-router-dom";
-import AuthLayout from "../Layouts/AuthLayouts";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import AuthLayout from "../Layouts/AuthLayouts";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
