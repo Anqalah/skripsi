@@ -5,27 +5,27 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { store } from "./App/store";
 import "./index.css";
-import AddTeacher from "./Pages/Teacher/AddTeacher.jsx";
-import AddStudent from "./Pages/Student/AddStudent.jsx";
 import AbsenAdmin from "./Pages/Admin/AbsenAdmin";
 import DashboardAdmin from "./Pages/Admin/DashboardAdmin";
+import EditAdmin from "./Pages/Admin/EditAdmin.jsx";
 import StudentAdmin from "./Pages/Admin/StudentAdmin";
 import TeacherAdmin from "./Pages/Admin/TeacherAdmin";
 import LoginPage from "./Pages/login";
-import ProductsPages from "./Pages/products";
 import RegisterPage from "./Pages/register";
 import AbsenStudent from "./Pages/Student/AbsenStudent";
+import AddStudent from "./Pages/Student/AddStudent.jsx";
+import ClockIn from "./Pages/Student/ClockIn.jsx";
+import ClockInResults from "./Pages/Student/ClockInResult.jsx";
+import ClockOut from "./Pages/Student/ClockOut.jsx";
 import HomeStudent from "./Pages/Student/HomeStudent";
 import ProfileStudent from "./Pages/Student/ProfileStudent";
 import AbsenTeacher from "./Pages/Teacher/AbsenTeacher";
+import AddTeacher from "./Pages/Teacher/AddTeacher.jsx";
 import ClassTeacher from "./Pages/Teacher/ClassTeacher";
+import EditTeacher from "./Pages/Teacher/EditTeacher.jsx";
 import HomeTeacher from "./Pages/Teacher/HomeTeacher";
 import ProfileTeacher from "./Pages/Teacher/ProfileTeacher";
-import EditTeacher from "./Pages/Teacher/EditTeacher.jsx";
-import EditAdmin from "./Pages/Admin/EditAdmin.jsx";
-import ClockOut from "./Pages/Student/ClockOut.jsx";
-import ClockIn from "./Pages/Student/ClockIn.jsx";
-import ClockInResults from "./Pages/Student/ClockInResult.jsx";
+import FaceVerificationRegister from "./components/Fragments/FaceVerificationRegister.jsx";
 
 axios.defaults.withCredentials = true;
 
@@ -47,8 +47,8 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: "/products",
-    element: <ProductsPages />,
+    path: "/register/face",
+    element: <FaceVerificationRegister />,
   },
   {
     path: "/student/dashboard",

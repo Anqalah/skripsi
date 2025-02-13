@@ -1,5 +1,5 @@
 import express from "express";
-import { upload } from "../middleware/multer.js"; // Sesuaikan dengan lokasi file upload
+import { upload } from "../middleware/Multer.js"; // Sesuaikan dengan lokasi file upload
 import {
   clockIn,
   clockOut,
