@@ -1,15 +1,60 @@
-// LoginPage.jsx
+// FormLogin.jsx
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { React, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../Features/authSlice";
 import AuthLayout from "../Layouts/AuthLayouts";
 
-const LoginPage = () => {
+const FormLogin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isSuccess, isError, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (user && isSuccess) {
+      switch (user.role) {
+        case "Admin":
+          navigate("/admin/dashboard/");
+          break;
+        case "Teacher":
+          navigate("/teacher/dashboard");
+          break;
+        case "Student":
+          navigate("/student/dashboard");
+          break;
+        default:
+          break;
+      }
+    }
+
+    if (isError) {
+      setError(message);
+    }
+  }, [user, isSuccess, isError, message, navigate, dispatch]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setError(null); // Reset error state sebelum mencoba login
+    try {
+      dispatch(login({ email, password }));
+    } catch (error) {
+      setError("Terjadi kesalahan saat mencoba login.");
+      console.log(error);
+    }
+  };
 
   return (
     <AuthLayout title="Masuk ke Akun" type="login">
       {/* Login Form */}
-      <form className="space-y-6">
+      <form onSubmit={handleLogin} className="space-y-6">
         <div className="space-y-4">
           {/* Email Input */}
           <div>
@@ -17,9 +62,11 @@ const LoginPage = () => {
               Email
             </label>
             <input
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all"
               placeholder="contoh@email.com"
+              required
             />
           </div>
 
@@ -30,9 +77,11 @@ const LoginPage = () => {
             </label>
             <div className="relative">
               <input
+                onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? "text" : "password"}
                 className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-blue-100 transition-all pr-12"
                 placeholder="••••••••"
+                required
               />
               <button
                 type="button"
@@ -49,6 +98,9 @@ const LoginPage = () => {
           </div>
         </div>
 
+        {/* Error Message */}
+        {error && <div className="text-red-500 text-sm">{error}</div>}
+
         {/* Login Button */}
         <button
           type="submit"
@@ -62,4 +114,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default FormLogin;
