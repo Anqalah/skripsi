@@ -218,14 +218,15 @@ const FormRegister = ({ initialValues, onSubmit }) => {
             )}
           </div>
         </div>
-
-        <Button
-          type="submit"
-          variant="primary"
-          className="w-full bg-primary hover:bg-blue-600 text-white  py-3.5 px-6 rounded-lg font-semibold transition-colors shadow-sm hover:shadow-md flex items-center justify-center hover:scale-[1.02] transition-transform justify-center gap-2"
-        >
-          Lanjut ke Verifikasi Wajah
-        </Button>
+        <Link to={"/register/face"}>
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-full bg-primary hover:bg-blue-600 text-white  py-3.5 px-6 rounded-lg font-semibold transition-colors shadow-sm hover:shadow-md flex items-center justify-center hover:scale-[1.02] transition-transform justify-center gap-2"
+          >
+            Lanjut ke Verifikasi Wajah
+          </Button>
+        </Link>
       </form>
     </AuthLayout>
   );

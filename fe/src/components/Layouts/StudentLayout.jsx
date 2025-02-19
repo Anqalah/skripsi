@@ -1,7 +1,6 @@
-// StudentLayout.jsx
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom"; // Tambahkan useLocation
 import { getMe } from "../../Features/authSlice";
 import { HomeIcon, ClockIcon, CameraIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
@@ -11,8 +10,20 @@ const StudentLayout = ({ children }) => {
   const [showUserModal, setShowUserModal] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
   const navigate = useNavigate();
+  const location = useLocation(); // Tambahkan ini
   const { isError, user: authUser } = useSelector((state) => state.auth);
   const [hasClockedIn, setHasClockedIn] = useState(false);
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === "/student/dashboard" || path === "/student/dashboard/") {
+      setActiveTab("home");
+    } else if (path.startsWith("/student/absen")) {
+      setActiveTab("history");
+    } else if (path.includes("/attendances/clock")) {
+      setActiveTab("scan");
+    }
+  }, [location]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -43,8 +54,8 @@ const StudentLayout = ({ children }) => {
   if (!authUser) return null;
 
   return (
-    <div className="relative w-full max-w-md h-screen mx-auto bg-gray-50 overflow-hidden font-inter">
-      {/* Modern Gradient Header */}
+    <div className="flex flex-col w-full max-w-md h-screen mx-auto bg-gray-50 overflow-hidden font-inter border-black">
+      {/* Header tetap sama */}
       <header className="sticky top-0 z-20 bg-gradient-to-r from-primary to-blue-600 shadow-sm">
         <div className="flex justify-between items-center p-5">
           <h1 className="text-white font-bold text-xl">Student Portal</h1>
@@ -82,31 +93,36 @@ const StudentLayout = ({ children }) => {
       </header>
 
       {/* Content Area */}
-      <main className="p-5 pb-24 h-full overflow-y-auto scroll-smooth">
+      <main className="flex-2 p-4 h-full overflow-y-auto scroll-smooth">
         {children}
       </main>
 
       {/* Floating Navigation Bar */}
-      <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md bg-white rounded-2xl shadow-xl border border-gray-100">
+      <nav className="w-full  bg-white rounded-t-2xl shadow-xl border border-t-gray-300">
         <div className="flex justify-around items-center p-2">
           <NavLink
             to="/student/dashboard"
             icon={<HomeIcon />}
             label="Home"
             active={activeTab === "home"}
-            onClick={() => setActiveTab("home")}
           />
 
-          {/* Scan Button with Gradient */}
+          {/* Scan Button */}
           <Link
             to={
               hasClockedIn
                 ? `/attendances/clockout/${authUser.uuid}`
                 : `/attendances/clockin/${authUser.uuid}`
             }
-            className="relative -top-8"
+            className="relative -top-1"
           >
-            <button className="p-5 rounded-full bg-gradient-to-br from-primary to-blue-600 shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+            <button
+              className={`p-5 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all ${
+                activeTab === "scan"
+                  ? "ring-4 ring-blue-200 bg-gradient-to-br from-primary to-blue-600"
+                  : "bg-gradient-to-br from-primary to-blue-600"
+              }`}
+            >
               <CameraIcon className="w-8 h-8 text-white" />
             </button>
           </Link>
@@ -116,7 +132,6 @@ const StudentLayout = ({ children }) => {
             icon={<ClockIcon />}
             label="History"
             active={activeTab === "history"}
-            onClick={() => setActiveTab("history")}
           />
         </div>
       </nav>
@@ -124,19 +139,29 @@ const StudentLayout = ({ children }) => {
   );
 };
 
-const NavLink = ({ to, icon, label, active, onClick }) => (
-  <Link
-    to={to}
-    onClick={onClick}
-    className={`flex flex-col items-center p-3 rounded-xl transition-all ${
-      active ? "bg-blue-50 text-primary" : "text-gray-500 hover:bg-gray-50"
-    }`}
-  >
-    {React.cloneElement(icon, {
-      className: `w-7 h-7 ${active ? "stroke-2" : ""}`,
-    })}
-    <span className="text-xs mt-1 font-medium">{label}</span>
-  </Link>
-);
+const NavLink = ({ to, icon, label, active }) => {
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    // Gunakan requestAnimationFrame untuk sinkronisasi state dan navigasi
+    requestAnimationFrame(() => {
+      navigate(to);
+    });
+  };
+
+  return (
+    <button
+      onClick={handleNavigation}
+      className={`flex flex-col items-center p-3 rounded-xl transition-all ${
+        active ? "bg-blue-50 text-primary" : "text-gray-500 hover:bg-gray-50"
+      }`}
+    >
+      {React.cloneElement(icon, {
+        className: `w-7 h-7 ${active ? "stroke-2" : ""}`,
+      })}
+      <span className="text-xs mt-1 font-medium">{label}</span>
+    </button>
+  );
+};
 
 export default StudentLayout;

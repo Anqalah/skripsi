@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { store } from "./App/store";
+import FaceVerificationRegister from "./components/Fragments/FaceVerificationRegister.jsx";
 import "./index.css";
 import AbsenAdmin from "./Pages/Admin/AbsenAdmin";
 import DashboardAdmin from "./Pages/Admin/DashboardAdmin";
@@ -25,7 +26,6 @@ import ClassTeacher from "./Pages/Teacher/ClassTeacher";
 import EditTeacher from "./Pages/Teacher/EditTeacher.jsx";
 import HomeTeacher from "./Pages/Teacher/HomeTeacher";
 import ProfileTeacher from "./Pages/Teacher/ProfileTeacher";
-import FaceVerificationRegister from "./components/Fragments/FaceVerificationRegister.jsx";
 
 axios.defaults.withCredentials = true;
 
