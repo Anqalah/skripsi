@@ -61,21 +61,13 @@ const FaceVerificationRegister = ({ onBack, onSubmit }) => {
         <div className="flex items-center justify-between px-4">
           <Link
             to="/register"
-            className="flex items-center text-[#4A5568] hover:text-[#2A4365] transition-colors group"
+            className="flex items-center text-[#4A5568] hover:text-[#D4AF37] transition-colors group"
           >
             <ArrowLeftIcon className="w-6 h-6 mr-2 transition-transform group-hover:-translate-x-1" />
-            <span className="font-medium">Kembali</span>
+            <span className="font-medium text-[#4A5568] hover:text-[#D4AF37] transition-colors group">
+              Kembali
+            </span>
           </Link>
-          <div className="flex gap-2">
-            {instructions.map((_, i) => (
-              <div
-                key={i}
-                className={`w-3 h-3 rounded-full ${
-                  i <= currentInstruction ? "bg-[#D4AF37]" : "bg-[#4A5568]/20"
-                }`}
-              />
-            ))}
-          </div>
         </div>
 
         {/* Video Container */}
@@ -90,58 +82,17 @@ const FaceVerificationRegister = ({ onBack, onSubmit }) => {
 
             {/* Overlay Instruction */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#2A4365]/90 to-transparent p-6">
-              <div className="text-center text-white space-y-3">
-                <div className="flex items-center justify-center gap-2">
-                  <CheckCircleIcon
-                    className={`w-6 h-6 transition-colors ${
-                      capturedImages[currentInstruction]
-                        ? "text-[#D4AF37]"
-                        : "text-white/30"
-                    }`}
-                  />
-                  <span className="font-medium text-sm">
-                    Langkah {currentInstruction + 1} dari {instructions.length}
-                  </span>
+              {/* Control Section */}
+              <Button
+                onClick={captureFace}
+                className="w-full py-4 text-lg hover:scale-[1.02] transition-transform"
+              >
+                <div className="text-[#2A4365] hover:text-[#D4AF37] transition-colors group flex items-center justify-center gap-3">
+                  <CameraIcon className="w-6 h-6" />
+                  <span>Selesaikan Verifikasi</span>
                 </div>
-                <p className="text-xl font-bold drop-shadow-md">
-                  {instructions[currentInstruction]}
-                </p>
-              </div>
+              </Button>
             </div>
-          </div>
-        </div>
-
-        {/* Control Section */}
-        <div className="space-y-6 px-4">
-          <Button
-            variant={
-              currentInstruction === instructions.length - 1
-                ? "success"
-                : "primary"
-            }
-            onClick={captureFace}
-            className="w-full py-4 text-lg hover:scale-[1.02] transition-transform"
-          >
-            <div className="flex items-center justify-center gap-3">
-              <CameraIcon className="w-6 h-6" />
-              <span>
-                {currentInstruction < instructions.length - 1
-                  ? `Ambil Foto ${currentInstruction + 1}`
-                  : "Selesaikan Verifikasi"}
-              </span>
-            </div>
-          </Button>
-
-          {/* Progress Bar */}
-          <div className="h-2 bg-[#4A5568]/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#D4AF37] transition-all duration-500"
-              style={{
-                width: `${
-                  ((currentInstruction + 1) / instructions.length) * 100
-                }%`,
-              }}
-            />
           </div>
         </div>
       </div>
