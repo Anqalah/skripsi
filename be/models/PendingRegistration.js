@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-import Teachers from "./TeacherModel.js";
 
 const { DataTypes } = Sequelize;
-const Students = db.define(
-  "students",
+
+const PendingRegistration = db.define(
+  "pending_registrations",
   {
     uuid: {
       type: DataTypes.STRING,
@@ -42,24 +42,28 @@ const Students = db.define(
         notEmpty: true,
       },
     },
-    role: {
+    verification_token: {
       type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    expires_at: {
+      type: DataTypes.DATE,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    foto: {
-      type: DataTypes.STRING,
-    },
-    face_image: {
-      type: DataTypes.BLOB,
-    },
   },
-  { freezeTableName: true }
+  {
+    freezeTableName: true,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+  }
 );
 
-Teachers.hasMany(Students);
-Students.belongsTo(Teachers);
-
-export default Students;
+export default PendingRegistration;

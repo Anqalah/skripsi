@@ -1,23 +1,17 @@
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../Elements/Button";
-import {
-  ArrowLeftIcon,
-  CameraIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, CameraIcon } from "@heroicons/react/24/outline";
 import AuthLayout from "../Layouts/AuthLayouts";
+import { API_BASE_URL } from "../../config/config";
+import axios from "axios";
 
-const FaceVerificationRegister = ({ onBack, onSubmit }) => {
+const FaceVerificationRegister = () => {
   const videoRef = useRef(null);
-  const [instructions] = useState([
-    "Hadapkan wajah lurus ke kamera",
-    "Miringkan kepala ke kiri",
-    "Miringkan kepala ke kanan",
-    "Angkat kepala ke atas",
-  ]);
-  const [currentInstruction, setCurrentInstruction] = useState(0);
-  const [capturedImages, setCapturedImages] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [token] = useState(new URLSearchParams(location.search).get("token"));
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const initCamera = async () => {
@@ -25,11 +19,15 @@ const FaceVerificationRegister = ({ onBack, onSubmit }) => {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: "user" },
         });
-        videoRef.current.srcObject = stream;
+        // Pastikan videoRef.current exist
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
       } catch (error) {
         alert("Gagal mengakses kamera: " + error.message);
       }
     };
+
     initCamera();
     return () => {
       if (videoRef.current?.srcObject) {
@@ -39,18 +37,24 @@ const FaceVerificationRegister = ({ onBack, onSubmit }) => {
   }, []);
 
   const captureFace = async () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    canvas.getContext("2d").drawImage(videoRef.current, 0, 0);
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
 
-    const imageData = canvas.toDataURL("image/jpeg");
-    setCapturedImages((prev) => [...prev, imageData]);
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(videoRef.current, 0, 0);
+      const imageData = canvas.toDataURL("image/jpeg", 0.85);
 
-    if (currentInstruction < instructions.length - 1) {
-      setCurrentInstruction((prev) => prev + 1);
-    } else {
-      onSubmit([...capturedImages, imageData]);
+      const response = await axios.post(`${API_BASE_URL}/register/complete`, {
+        verification_token: token,
+        face_image: imageData,
+      });
+      if (response.data.success) {
+        navigate("/login");
+      }
+    } catch (error) {
+      setError(error.response?.data?.error || "Gagal verifikasi wajah");
     }
   };
 

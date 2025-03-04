@@ -10,7 +10,7 @@ lerna-debug.log*
 be
 
 node_modules
-.venv
+venv
 .idx
 dist
 dist-ssr
