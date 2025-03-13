@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { API_BASE_URL } from "../config/config.js";
+import axiosInstance from "../config/axios.js";
 
 const initialState = {
   user: null,
@@ -12,7 +11,7 @@ const initialState = {
 
 export const login = createAsyncThunk("user/Login", async (user, thunkAPI) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/login`, user);
+    const response = await axiosInstance.post("/login", user);
     return response.data;
   } catch (error) {
     const message = error.response.data.message;
@@ -22,7 +21,7 @@ export const login = createAsyncThunk("user/Login", async (user, thunkAPI) => {
 
 export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/me`);
+    const response = await axiosInstance.get("/me");
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -32,8 +31,8 @@ export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
   }
 });
 
-export const LogOut = createAsyncThunk("user/logout", async () => {
-  await axios.delete(`${API_BASE_URL}/logout`);
+export const logout = createAsyncThunk("user/logout", async () => {
+  await axiosInstance.delete("logout");
 });
 
 export const authSlice = createSlice({

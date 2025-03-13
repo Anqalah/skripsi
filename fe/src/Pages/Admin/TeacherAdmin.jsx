@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminLayout from "../../components/Layouts/AdminLayout";
-import { API_BASE_URL } from "../../config/config";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import { Link } from "react-router-dom";
 import Button from "../../components/Elements/Button";
 
@@ -13,14 +12,15 @@ const TeacherAdmin = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get(`${API_BASE_URL}/teachers`);
+    const response = await axiosInstance.get("/teachers");
     setUsers(response.data);
   };
 
   const deleteUser = async (userId) => {
-    await axios.delete(`${API_BASE_URL}/teachers/${userId}`);
+    await axiosInstance.delete("/teachers/${userId}");
     getUsers();
   };
+
   return (
     <AdminLayout>
       <Link to="add">

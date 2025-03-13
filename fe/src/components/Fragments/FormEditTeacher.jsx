@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Fragment } from "react";
 import { InputForm } from "../Elements/Input";
 import Button from "../Elements/Button";
-import { API_BASE_URL } from "../../config/config";
+import axiosInstance from "../../config/axios";
 
 const FormEditTeacher = () => {
   const [name, setName] = useState("");
@@ -22,7 +22,7 @@ const FormEditTeacher = () => {
   useEffect(() => {
     const getTeacherById = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/teachers/${id}`);
+        const response = await axiosInstance.get("/teachers/${id}");
         setName(response.data.name);
         setEmail(response.data.email);
         setRole(response.data.role);
@@ -38,7 +38,7 @@ const FormEditTeacher = () => {
   const updateTeacher = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`${API_BASE_URL}/teachers/${id}`, {
+      await axiosInstance.patch("/teachers/${id}", {
         name: name,
         jk: jk,
         umur: umur,

@@ -2,9 +2,8 @@ import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../../Features/authSlice";
-import { API_BASE_URL } from "../../config/config";
+import axiosInstance from "../../config/axios";
 import AdminLayout from "../../components/Layouts/AdminLayout";
-import axios from "axios";
 
 const DashboardAdmin = () => {
   const dispatch = useDispatch();
@@ -15,15 +14,16 @@ const DashboardAdmin = () => {
 
   const getTeachers = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/teachers`);
+      const response = await axiosInstance.get("/teachers");
       setTeachers(response.data);
     } catch (error) {
       console.error("Failed to fetch teachers:", error);
     }
   };
+
   const getStudents = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/students`);
+      const response = await axiosInstance.get("/students");
       setStudents(response.data);
     } catch (error) {
       console.error("Failed to fetch Students:", error);

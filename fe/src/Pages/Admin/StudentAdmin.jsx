@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/Layouts/AdminLayout";
-import { API_BASE_URL } from "../../config/config";
 import { Link } from "react-router-dom";
 import Button from "../../components/Elements/Button";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 
 const StudentAdmin = () => {
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
     getUsers();
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get(`${API_BASE_URL}/students`);
+    const response = await axiosInstance.get("/students");
     setUsers(response.data);
   };
 
   const deleteUser = async (userId) => {
-    await axios.delete(`${API_BASE_URL}/students/${userId}`);
+    await axiosInstance.delete("/students/${userId}");
     getUsers();
   };
 

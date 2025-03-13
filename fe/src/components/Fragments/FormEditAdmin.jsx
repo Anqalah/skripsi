@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../config/axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Fragment } from "react";
 import { InputForm } from "../Elements/Input";
 import Button from "../Elements/Button";
-import { API_BASE_URL } from "../../config/config";
 
 const FormEditAdmin = () => {
   const [name, setName] = useState("");
@@ -19,7 +18,7 @@ const FormEditAdmin = () => {
   useEffect(() => {
     const getAdminById = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/admins/${id}`);
+        const response = await axiosInstance.get(`/admins/${id}`);
         setName(response.data.name);
         setEmail(response.data.email);
         setRole(response.data.role);
@@ -35,7 +34,7 @@ const FormEditAdmin = () => {
   const updateAdmin = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`${API_BASE_URL}/admins/${id}`, {
+      await axiosInstance.patch(`/admins/${id}`, {
         name: name,
         hp: hp,
         email: email,

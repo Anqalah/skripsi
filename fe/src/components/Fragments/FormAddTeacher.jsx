@@ -2,8 +2,7 @@ import React, { Fragment, useState } from "react";
 import { InputForm } from "../Elements/Input";
 import { useNavigate } from "react-router-dom";
 import Button from "../Elements/Button";
-import axios from "axios";
-import { API_BASE_URL } from "../../config/config";
+import axiosInstance from "../../config/axios";
 
 export const FormAddTeacher = () => {
   const [name, setName] = useState("");
@@ -19,7 +18,7 @@ export const FormAddTeacher = () => {
   const saveTeacher = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}/teachers`, {
+      await axiosInstance.post("/teachers", {
         name: name,
         jk: jk,
         umur: umur,

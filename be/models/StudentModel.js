@@ -52,6 +52,9 @@ const Students = db.define(
     foto: {
       type: DataTypes.STRING,
     },
+    face_embedding: {
+      type: DataTypes.TEXT,
+    },
     face_image: {
       type: DataTypes.BLOB,
     },

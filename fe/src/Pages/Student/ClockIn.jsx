@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "../../config/config";
+import axiosInstance from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 import StudentLayout from "../../components/Layouts/StudentLayout";
 import LocationMap from "../../components/Elements/LocationMap/LocationMap";
@@ -22,7 +21,7 @@ const ClockIn = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/me`);
+      const response = await axiosInstance.get("/me");
       setUser(response.data);
     } catch (error) {
       console.error("Error fetching user data: ", error);
@@ -67,7 +66,6 @@ const ClockIn = () => {
   const captureImage = () => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
-
     if (video) {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -120,7 +118,6 @@ const ClockIn = () => {
     <StudentLayout>
       <div className="max-w-md mx-auto p-4">
         <h2 className="text-xl font-semibold mb-4">Clock In Siswa</h2>
-
         <button
           type="button"
           onClick={getLocation}
@@ -128,18 +125,15 @@ const ClockIn = () => {
         >
           Dapatkan Lokasi
         </button>
-
         {latitude && longitude && (
           <div className="mb-4">
             <p>Latitude: {latitude}</p>
             <p>Longitude: {longitude}</p>
           </div>
         )}
-
         {latitude && longitude && (
           <LocationMap latitude={latitude} longitude={longitude} />
         )}
-
         <div className="mb-4">
           <video
             ref={videoRef}
@@ -148,7 +142,6 @@ const ClockIn = () => {
           />
           <canvas ref={canvasRef} style={{ display: "none" }} />
         </div>
-
         <button
           type="button"
           onClick={captureImage}
@@ -156,7 +149,6 @@ const ClockIn = () => {
         >
           Ambil Foto Wajah
         </button>
-
         {imageSrc && (
           <div className="mb-4">
             <h3 className="text-lg font-semibold">Foto Wajah:</h3>
@@ -167,7 +159,6 @@ const ClockIn = () => {
             />
           </div>
         )}
-
         <form onSubmit={handleSubmit} className="space-y-4">
           <button
             type="submit"

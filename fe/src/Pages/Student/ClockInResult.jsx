@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "../../config/config";
+import axiosInstance from "../../config/axios";
 import { useNavigate, useParams } from "react-router-dom"; // Import useParams untuk mendapatkan id
 import StudentLayout from "../../components/Layouts/StudentLayout";
 
@@ -8,16 +7,16 @@ const ClockInResults = () => {
   const [clockInData, setClockInData] = useState(null);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams(); // Mengambil id dari URL params
+  const { id } = useParams();
 
   useEffect(() => {
     fetchClockInData();
-  }, [id]); // Tambahkan id sebagai dependensi
+  }, [id]);
 
   const fetchClockInData = async () => {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/attendances/clockin-result/${id}`
+      const response = await axiosInstance.get(
+        "/attendances/clockin-result/${id}"
       );
       setClockInData(response.data);
     } catch (error) {
@@ -30,9 +29,7 @@ const ClockInResults = () => {
     <StudentLayout>
       <div className="max-w-md mx-auto p-4">
         <h2 className="text-xl font-semibold mb-4">Hasil Clock In Siswa</h2>
-
         {message && <p className="text-red-500">{message}</p>}
-
         {clockInData ? (
           <div className="space-y-4">
             <p>
